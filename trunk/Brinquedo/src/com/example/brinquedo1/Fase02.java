@@ -43,6 +43,8 @@ public class Fase02 extends View implements Runnable {
 	Boolean movendo;
 	Rect mov;
 
+	Rect[] rectsColor;
+
 	public Fase02(Context context) {
 		super(context);
 
@@ -60,6 +62,7 @@ public class Fase02 extends View implements Runnable {
 		asset = new CarregarAssets(context, paint);
 		geometricFigures = asset.figuras();
 		rects = asset.getRect();
+		rectsColor = asset.getRectColor();
 		order[0] = current + 3;
 		order[1] = 0;
 		order[2] = 0;
@@ -125,17 +128,18 @@ public class Fase02 extends View implements Runnable {
 		}
 
 		if (event.getAction() == MotionEvent.ACTION_MOVE) {
-			if (currentTime == 0) {
-				Log.i(MainActivity.TAG, "SHAKE !!!");
-				int c = (int) event.getX();
-				int d = (int) event.getY();
 
-				// Testes de Colisão da imagem preto e branco de acordo com a
-				// sua respectiva imagem colorida.
+			Log.i(MainActivity.TAG, "SHAKE !!!");
+			int c = (int) event.getX();
+			int d = (int) event.getY();
 
-				if (movendo) {
-					if (mov.contains(c, d)) {
+			// Testes de Colisão da imagem preto e branco de acordo com a
+			// sua respectiva imagem colorida.
 
+			if (mov != null) {
+				if (mov.contains(c, d)) {
+
+					if (movendo) {
 						positionX = (int) event.getX();
 						positionY = (int) event.getY();
 
@@ -143,11 +147,14 @@ public class Fase02 extends View implements Runnable {
 
 						asset.setRect(mov);
 
-					} else {
-						movendo = false;
-						Log.i("ooi", "entrou no sssset");
-						asset.setRectInicial(mov);
 					}
+
+				} else {
+					movendo = false;
+
+					Log.i("ooi", "entrou no sssset");
+					if (mov != null)
+						asset.setRectInicial(mov);
 				}
 
 			}
@@ -156,8 +163,27 @@ public class Fase02 extends View implements Runnable {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
 
 			movendo = false;
-			if (mov != null)
+
+			for (int i = 0; i < rectsColor.length; i++) {
+				if (mov != null) {
+					if (mov.contains((int) rectsColor[i].exactCenterX(),
+							(int) rectsColor[i].exactCenterY())) {
+
+						if (rects[i] == mov) {
+							asset.colidiu(mov, rectsColor[i], i);
+							rects[i].setEmpty();
+							movendo = false;
+							mov = null;
+						}
+					}
+				}
+			}
+			if (mov != null) {
+
 				asset.setRectInicial(mov);
+
+			}
+
 		}
 
 		return super.onTouchEvent(event);
@@ -173,33 +199,7 @@ public class Fase02 extends View implements Runnable {
 			counter = 0;
 		}
 
-		if (currentTime != 0) {
-			asset.geometricFigures[current] = asset.geometricFigures[6];
-			positionX = getWidth() / 2;
-			positionY = getHeight() / 2;
-			if (currentTime - period >= 1) {
-
-				// Verificação para não vir nenhuma figura geométrica repetida.
-				while (current + 3 == order[0] || current + 3 == order[1]) {
-					current = rnd.nextInt(3);
-				}
-
-				for (int i = 0; i < order.length; i++) {
-					if (order[i] == 0) {
-						order[i] = current + 3;
-						break;
-					}
-				}
-				asset.geometricFigures[6] = asset.geometricFigures[current + 3];
-
-				// geometricFigures[6]=geometricFigures[current+3];
-
-				asset.setXY(positionX, positionY);
-				// asset.geometricFigures[6].eraseColor(VISIBLE);
-				hitPoints++;
-				currentTime = 0;
-			}
-		}
+		
 	}
 
 	public void run() {

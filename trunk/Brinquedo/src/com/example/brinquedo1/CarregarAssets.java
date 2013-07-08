@@ -20,6 +20,8 @@ public class CarregarAssets {
 	int Y;
 	Rect[] rect = new Rect[3];
 
+	Rect[] rectColor = new Rect[3];
+
 	public CarregarAssets(Context context, Paint paint) {
 
 		// int current = rnd.nextInt(3);
@@ -35,7 +37,9 @@ public class CarregarAssets {
 		rect[0] = new Rect();
 		rect[1] = new Rect();
 		rect[2] = new Rect();
-
+		rectColor[0] = new Rect();
+		rectColor[1] = new Rect();
+		rectColor[2] = new Rect();
 		this.paint = paint;
 
 	}
@@ -58,6 +62,14 @@ public class CarregarAssets {
 				(int) (3.5f * this.alt / 6));
 		rect[2].set(this.larg / 40, 2 * this.alt / 3, this.larg / 6,
 				(int) (5.5f * this.alt / 6));
+		rectColor[0].set((int) (6 * this.larg / 20), 5 * this.alt / 8,
+				(int) (9.5 * this.larg / 20), 7 * this.alt / 8);
+
+		rectColor[1].set((int) (10.9f * this.larg / 20), 5 * this.alt / 8,
+				(int) (14.5f * this.larg / 20), 7 * this.alt / 8);
+
+		rectColor[2].set((int) (15f * this.larg / 20), 5 * this.alt / 8,
+				(int) (18.5f * this.larg / 20), 7 * this.alt / 8);
 	}
 
 	public void setXY(int x, int y) {
@@ -69,17 +81,28 @@ public class CarregarAssets {
 		return rect;
 	}
 
+	public Rect[] getRectColor() {
+		return rectColor;
+	}
+
+	public void colidiu(Rect rect, Rect rectcolor,int i) {
+		
+				rect.set(rectcolor);
+				
+				geometricFigures[i]=geometricFigures[i+3];
+				}
+
 	public void setRectInicial(Rect rec) {
 		for (int i = 0; i < rect.length; i++) {
-			if (rect[i] == rec && i!=0) {
+			if (rect[i] == rec && i != 0) {
 
 				rect[i].set(this.larg / 40, i * this.alt / 3, this.larg / 6,
 						(int) ((i * 2 + 1.5f) * this.alt / 6));
 			}
-			if(rect[i]==rec && i==0){
+			if (rect[i] == rec && i == 0) {
 				rect[i].set(this.larg / 40, this.alt / 30, this.larg / 6,
 						(int) ((i * 2 + 1.5f) * this.alt / 6));
-				
+
 			}
 
 		}
@@ -95,18 +118,13 @@ public class CarregarAssets {
 
 	public void Draw(Canvas canvas) {
 
-		canvas.drawBitmap(geometricFigures[3], null, rect[0], paint);
-		canvas.drawBitmap(geometricFigures[4], null, rect[1], paint);
+		for(int i=0;i<rect.length;i++){
 
-		canvas.drawBitmap(geometricFigures[5], null, rect[2], paint);
+			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
 
-		// canvas.drawBitmap(geometricFigures[0], 0, 0, paint);
-		// canvas.drawBitmap(geometricFigures[1], larg / 3, 0, paint);
-		// canvas.drawBitmap(geometricFigures[2], larg - 100, 0, paint);
-
-		// Imagem que ficará na parte de baixo (figura geométrica em PB).
-		// if (geometricFigures[6] != null)
-		// canvas.drawBitmap(geometricFigures[6], X, Y, paint);
+			canvas.drawBitmap(geometricFigures[i+3], null, rect[i], paint);
+		}
+		
 
 	}
 }
