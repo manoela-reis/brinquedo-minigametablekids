@@ -97,7 +97,7 @@ public class Menu extends View implements Runnable {
 			// Play
 			if (areaOptions[0].contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
-				fase01 = new Fase01(activity);
+				fase01 = new Fase02(activity);
 				activity.setContentView(fase01);
 			}
 		}
