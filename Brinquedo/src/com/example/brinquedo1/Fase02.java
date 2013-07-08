@@ -87,7 +87,10 @@ public class Fase02 extends View implements Runnable {
 			MyCanvas = canvas;
 
 			canvas.drawBitmap(Backgrounds[2], null, Back, paint);
-
+			canvas.drawBitmap(geometricFigures[3], getWidth()/35, getHeight()/60, paint);
+			canvas.drawBitmap(geometricFigures[4], getWidth()/15, getHeight()/2.9f, paint);
+			canvas.drawBitmap(geometricFigures[5], getWidth()/15, getHeight()/1.5f, paint);
+			
 			// Textos na tela.
 /*			canvas.drawText("Score:" + hitPoints + "/" + totalPoints,
 					getWidth() / 13, getHeight() / 1.1f, paint);
