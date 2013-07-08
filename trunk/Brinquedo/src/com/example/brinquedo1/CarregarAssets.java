@@ -58,13 +58,13 @@ public class CarregarAssets {
 
 	public void Draw(Canvas canvas) {
 
-		canvas.drawBitmap(geometricFigures[0], 0, 0, paint);
-		canvas.drawBitmap(geometricFigures[1], larg / 3, 0, paint);
-		canvas.drawBitmap(geometricFigures[2], larg - 100, 0, paint);
+	//	canvas.drawBitmap(geometricFigures[0], 0, 0, paint);
+	//	canvas.drawBitmap(geometricFigures[1], larg / 3, 0, paint);
+	//	canvas.drawBitmap(geometricFigures[2], larg - 100, 0, paint);
 
 		// Imagem que ficará na parte de baixo (figura geométrica em PB).
-		if (geometricFigures[6] != null)
-			canvas.drawBitmap(geometricFigures[6], X, Y, paint);
+//		if (geometricFigures[6] != null)
+//			canvas.drawBitmap(geometricFigures[6], X, Y, paint);
 
 	}
 }
