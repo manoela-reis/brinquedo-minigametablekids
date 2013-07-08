@@ -51,10 +51,9 @@ public class CarregarAssets {
 	public void setconfig(int larg, int Alt) {
 		this.larg = larg;
 		this.alt = Alt;
-		rect[0].set(0, 0, this.larg/6,(int)(1.5f*this.alt/6));
-		rect[1].set(0, this.alt/3, this.larg/6,(int)( 3.5f*this.alt/6));
-		rect[2].set(0, 2*this.alt/3, this.larg/6, (int)(5.5f*this.alt/6));
-
+		rect[0].set(this.larg/40, this.alt/30, this.larg/6,(int)(1.5f*this.alt/6));
+		rect[1].set(this.larg/40, this.alt/3, this.larg/6,(int)( 3.5f*this.alt/6));
+		rect[2].set(this.larg/40, 2*this.alt/3, this.larg/6, (int)(5.5f*this.alt/6));
 	}
 
 	public void setXY(int x, int y) {
