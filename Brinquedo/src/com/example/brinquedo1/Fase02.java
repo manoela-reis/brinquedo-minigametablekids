@@ -39,6 +39,7 @@ public class Fase02 extends View implements Runnable {
 	ImageManager img;
 	// Context context;
 	CarregarAssets asset;
+	Rect[] rects ;
 
 	public Fase02(Context context) {
 		super(context);
@@ -56,12 +57,14 @@ public class Fase02 extends View implements Runnable {
 
 		asset = new CarregarAssets(context, paint);
 		geometricFigures = asset.figuras();
+		rects=asset.getRect();
 		order[0] = current + 3;
 		order[1] = 0;
 		order[2] = 0;
 		Backgrounds[0] = img.ImageManager("bgCongrats.bmp");
 		Backgrounds[1] = img.ImageManager("bgGameOver.bmp");
-		Backgrounds[2] = img.ImageManager("Background1.png");
+		Backgrounds[2] = img.ImageManager("fundo.png");
+		
 
 		Thread processo = new Thread(this);
 		processo.start();
@@ -87,9 +90,9 @@ public class Fase02 extends View implements Runnable {
 			MyCanvas = canvas;
 
 			canvas.drawBitmap(Backgrounds[2], null, Back, paint);
-			canvas.drawBitmap(geometricFigures[3], getWidth()/35, getHeight()/60, paint);
-			canvas.drawBitmap(geometricFigures[4], getWidth()/15, getHeight()/2.9f, paint);
-			canvas.drawBitmap(geometricFigures[5], getWidth()/15, getHeight()/1.5f, paint);
+			//canvas.drawBitmap(geometricFigures[3], getWidth()/35, getHeight()/60, paint);
+			//canvas.drawBitmap(geometricFigures[4], getWidth()/15, getHeight()/2.9f, paint);
+			//canvas.drawBitmap(geometricFigures[5], getWidth()/15, getHeight()/1.5f, paint);
 			
 			// Textos na tela.
 /*			canvas.drawText("Score:" + hitPoints + "/" + totalPoints,
@@ -144,6 +147,7 @@ public class Fase02 extends View implements Runnable {
 
 				// Testes de Colisão da imagem preto e branco de acordo com a
 				// sua respectiva imagem colorida.
+				
 				if (object_down.contains(c, d)) {
 					positionX = (int) event.getRawX()
 							- asset.geometricFigures[6].getWidth() / 2;
