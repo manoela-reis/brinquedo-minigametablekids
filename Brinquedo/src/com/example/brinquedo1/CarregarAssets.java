@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class CarregarAssets {
+public class CarregarAssets extends Scene{
 
 	Bitmap[] geometricFigures = new Bitmap[7];
 	ImageManager img;
@@ -22,7 +22,7 @@ public class CarregarAssets {
 
 	Rect[] rectColor = new Rect[3];
 
-	public CarregarAssets(Context context, Paint paint) {
+	public CarregarAssets(Context context) {
 
 		// int current = rnd.nextInt(3);
 		img = new ImageManager(context);
@@ -40,7 +40,6 @@ public class CarregarAssets {
 		rectColor[0] = new Rect();
 		rectColor[1] = new Rect();
 		rectColor[2] = new Rect();
-		this.paint = paint;
 
 	}
 
@@ -53,9 +52,10 @@ public class CarregarAssets {
 		geometricFigures[6] = geometricFigures[sort];
 	}
 
-	public void setconfig(int larg, int Alt) {
+	public void setconfig(int larg, int Alt, Paint paint) {
 		this.larg = larg;
 		this.alt = Alt;
+		this.paint=paint;
 		rect[0].set(this.larg / 40, this.alt / 30, this.larg / 6,
 				(int) (1.5f * this.alt / 6));
 		rect[1].set(this.larg / 40, this.alt / 3, this.larg / 6,
