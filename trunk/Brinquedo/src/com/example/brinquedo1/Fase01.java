@@ -56,7 +56,7 @@ public class Fase01 extends View implements Runnable {
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(20);
 
-		asset = new CarregarAssets(context, paint);
+		asset = new CarregarAssets(context);
 		geometricFigures = asset.figuras();
 		rects = asset.getRect();
 		rectsColor = asset.getRectColor();
@@ -76,7 +76,7 @@ public class Fase01 extends View implements Runnable {
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		asset.setconfig(getWidth(), getHeight());
+		asset.setconfig(getWidth(), getHeight(),paint);
 
 		positionX = (int) getWidth() / 2;
 		positionY = (int) getHeight() / 2;

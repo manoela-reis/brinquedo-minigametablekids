@@ -34,7 +34,7 @@ public class SceneManager {
             case SCN_LEVEL_01:
                
 
-            	carregar = new CarregarAssets(game);
+            	carregar = new Level02(game);
                 SceneManager.scene.setFase(carregar);
                 SceneManager.currentScene = SCENE.SCN_LEVEL_02;
                
@@ -90,8 +90,6 @@ public class SceneManager {
         }
 
     }
-
-
 	
 	 public enum SCENE
 	    {
