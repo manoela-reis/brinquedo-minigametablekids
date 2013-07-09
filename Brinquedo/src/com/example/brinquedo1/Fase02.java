@@ -1,13 +1,9 @@
 package com.example.brinquedo1;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Random;
 
-import android.R.color;
+import java.util.Random;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,7 +11,7 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
+import com.example.brinquedo1.R;
 public class Fase02 extends View implements Runnable {
 
 	private long time = 1;
@@ -43,11 +39,12 @@ public class Fase02 extends View implements Runnable {
 	Boolean movendo;
 	Rect mov;
 
+	Context context;
 	Rect[] rectsColor;
 
 	public Fase02(Context context) {
 		super(context);
-
+		this.context = context;
 		setFocusableInTouchMode(true);
 		setClickable(true);
 		setLongClickable(true);
@@ -108,8 +105,8 @@ public class Fase02 extends View implements Runnable {
 		if (hitPoints == totalPoints) {
 			// classe de vitoria
 			canvas.drawBitmap(Backgrounds[0], null, Back, paint);
-			// SoundManager.getInstance().playSound(R.raw.acertei,
-			// "MenuSound",true, super.getContext());
+			SoundManager.getInstance().playSound(R.raw.acertei, "sound",
+					true, context);
 		}
 	}
 
@@ -174,7 +171,8 @@ public class Fase02 extends View implements Runnable {
 							rects[i].setEmpty();
 							movendo = false;
 							mov = null;
-						}
+							 SoundManager.getInstance().playSound(R.raw.acerto, "MenuSound",false,context);
+							}
 					}
 				}
 			}
@@ -199,7 +197,6 @@ public class Fase02 extends View implements Runnable {
 			counter = 0;
 		}
 
-		
 	}
 
 	public void run() {
