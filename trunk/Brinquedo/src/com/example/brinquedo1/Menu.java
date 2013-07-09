@@ -36,6 +36,8 @@ public class Menu extends View implements Runnable {
 		picture = new ImageManager(context);
 		paint = new Paint();
 
+	
+
 		activity = (Activity) context;
 		options = new Bitmap[3];
 		areaOptions = new Rect[3];
@@ -97,8 +99,10 @@ public class Menu extends View implements Runnable {
 			// Play
 			if (areaOptions[0].contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
-				fase01 = new Fase01(activity);
-				activity.setContentView(fase01);
+
+				SceneManager.Setup((Activity)super.getContext());
+				//fase01 = new Fase02(activity,);
+				
 			}
 		}
 

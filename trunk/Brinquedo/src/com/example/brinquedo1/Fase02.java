@@ -21,7 +21,7 @@ public class Fase02 extends View implements Runnable {
 	int counter;
 	private Paint paint;
 	private Rect Back = new Rect();
-	int totalPoints = 3;
+	int totalPoints ;
 	int hitPoints = 0;
 	Rect object_down;
 	int[] order = new int[3];
@@ -34,7 +34,7 @@ public class Fase02 extends View implements Runnable {
 	private int currentTime;
 	ImageManager img;
 	// Context context;
-	CarregarAssets asset;
+	Scene asset;
 	Rect[] rects;
 	Boolean movendo;
 	Rect mov;
@@ -42,7 +42,7 @@ public class Fase02 extends View implements Runnable {
 	Context context;
 	Rect[] rectsColor;
 
-	public Fase02(Context context) {
+	public Fase02(Context context, Scene asset) {
 		super(context);
 		this.context = context;
 		setFocusableInTouchMode(true);
@@ -56,10 +56,11 @@ public class Fase02 extends View implements Runnable {
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(20);
 
-		asset = new CarregarAssets(context, paint);
+		this.asset=asset;
 		geometricFigures = asset.figuras();
 		rects = asset.getRect();
 		rectsColor = asset.getRectColor();
+		totalPoints=rectsColor.length;
 		order[0] = current + 3;
 		order[1] = 0;
 		order[2] = 0;
@@ -72,11 +73,20 @@ public class Fase02 extends View implements Runnable {
 
 		// TODO Auto-generated constructor stub
 	}
+	public void setFase(Scene carreg){
+		this.asset=carreg;
+		geometricFigures = asset.figuras();
+		rects = asset.getRect();
+		rectsColor = asset.getRectColor();
+		asset.setconfig(getWidth(), getHeight(), paint);
+
+		totalPoints=rectsColor.length;
+	}
 
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		asset.setconfig(getWidth(), getHeight());
+		asset.setconfig(getWidth(), getHeight(), paint);
 
 		positionX = (int) getWidth() / 2;
 		positionY = (int) getHeight() / 2;
@@ -104,9 +114,11 @@ public class Fase02 extends View implements Runnable {
 		// Condição de vitória.
 		if (hitPoints == totalPoints) {
 			// classe de vitoria
-			canvas.drawBitmap(Backgrounds[0], null, Back, paint);
-			SoundManager.getInstance().playSound(R.raw.acertei, "sound",
-					true, context);
+		//	canvas.drawBitmap(Backgrounds[0], null, Back, paint);
+			SceneManager.ChangeScene(context);
+			SoundManager.getInstance().playSound(R.raw.acerto, "sound",
+					false, context);
+			hitPoints=0;
 		}
 	}
 
@@ -171,8 +183,10 @@ public class Fase02 extends View implements Runnable {
 							rects[i].setEmpty();
 							movendo = false;
 							mov = null;
+							hitPoints++;
 							 SoundManager.getInstance().playSound(R.raw.acerto, "MenuSound",false,context);
-							}
+							 
+						}
 					}
 				}
 			}

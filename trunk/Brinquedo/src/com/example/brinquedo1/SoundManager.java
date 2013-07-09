@@ -23,6 +23,8 @@ public class SoundManager {
 		if(instance == null)
 		{
 			instance = new SoundManager();
+
+			
 		}
 		
 		return instance;
