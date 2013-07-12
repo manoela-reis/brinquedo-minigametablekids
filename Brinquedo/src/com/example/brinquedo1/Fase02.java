@@ -24,16 +24,10 @@ public class Fase02 extends View implements Runnable {
 	int totalPoints ;
 	int hitPoints = 0;
 	Rect object_down;
-	int[] order = new int[3];
 	Rect[] areaObjectsUp = new Rect[3];
 	private static int positionX;
 	private static int positionY;
-	private Canvas MyCanvas;
-	private Random rnd = new Random();
-	private int current;
-	private int currentTime;
 	ImageManager img;
-	// Context context;
 	Scene asset;
 	Rect[] rects;
 	Boolean movendo;
@@ -61,9 +55,6 @@ public class Fase02 extends View implements Runnable {
 		rects = asset.getRect();
 		rectsColor = asset.getRectColor();
 		totalPoints=rectsColor.length;
-		order[0] = current + 3;
-		order[1] = 0;
-		order[2] = 0;
 		Backgrounds[0] = img.ImageManager("bgCongrats.bmp");
 		Backgrounds[1] = img.ImageManager("bgGameOver.bmp");
 		Backgrounds[2] = img.ImageManager("fundo.png");
@@ -98,7 +89,6 @@ public class Fase02 extends View implements Runnable {
 		super.draw(canvas);
 
 		if (period != 0 && hitPoints != totalPoints) {
-			MyCanvas = canvas;
 
 			canvas.drawBitmap(Backgrounds[2], null, Back, paint);
 

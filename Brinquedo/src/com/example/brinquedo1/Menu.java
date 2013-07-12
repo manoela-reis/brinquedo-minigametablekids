@@ -23,7 +23,7 @@ public class Menu extends View implements Runnable {
 	View fase01;
 	Activity activity;
 	private Rect Back = new Rect();
-	private CarregarAssets asset;
+	private Fase2_Assets asset;
 	private static int positionX;
 	private static int positionY;
 
