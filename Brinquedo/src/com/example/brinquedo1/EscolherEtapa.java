@@ -14,20 +14,24 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
-public class Menu extends View implements Runnable {
+public class EscolherEtapa extends View implements Runnable {
 	private Bitmap background;
-	private Bitmap[] options;
-	private Rect[] areaOptions;
+	private Bitmap etapa01;
+	private Bitmap etapa02;
+	
+	private Rect recBackground = new Rect();
+	private Rect rectEtapa01 = new Rect();
+	private Rect rectEtapa02 = new Rect();
+	
 	private ImageManager picture;
 	Paint paint;
-	private View etapas;
+	View fase01;
 	Activity activity;
-	private Rect Back = new Rect();
 	private Fase2_Assets asset;
 	private static int positionX;
 	private static int positionY;
 
-	public Menu(Context context) {
+	public EscolherEtapa(Context context) {
 		super(context);
 
 		setFocusableInTouchMode(true);
@@ -36,50 +40,29 @@ public class Menu extends View implements Runnable {
 		picture = new ImageManager(context);
 		paint = new Paint();
 
-	
-
 		activity = (Activity) context;
-		options = new Bitmap[3];
-		areaOptions = new Rect[3];
 
-		background = picture.ImageManager("fundomenu.png");
-		options[0] = picture.ImageManager("play.png");
-		options[1] = picture.ImageManager("credits.png");
-		options[2] = picture.ImageManager("quit.png");
+		background = picture.ImageManager("fundoEscolhaEtapa.png");
+		etapa01 = picture.ImageManager("MenuFasesEtapa1.png");
+		etapa02 = picture.ImageManager("MenuFasesEtapa2.png");
 
 		// TODO Auto-generated constructor stub
 	}
 
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-
-		Back.set(0, 0, getWidth(), getHeight());
+	
+		recBackground.set(0, 0, getWidth(), getHeight());
+		rectEtapa01.set(0, (int)(getHeight()/6), getWidth()/2,  (int)(getHeight()/1.2f));
+		rectEtapa02.set(getWidth()/2, (int)(getHeight()/6), getWidth(),  (int)(getHeight()/1.2f));
 	}
 
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 
-		canvas.drawBitmap(background, null, Back, paint);
-		canvas.drawBitmap(options[0], getWidth() / 3, getHeight() / 2, paint);
-		// canvas.drawBitmap(options[1], getWidth()/14, getHeight()/1.6f,
-		// paint);
-		// canvas.drawBitmap(options[2], getWidth()/1.5f, getHeight()/1.5f,
-		// paint);
-
-		areaOptions[0] = new Rect(getWidth() / 3, getHeight() / 2, getWidth()
-				/ 3 + (int) options[0].getWidth(), getHeight() / 2
-				+ (int) options[0].getHeight());
-		areaOptions[1] = new Rect(getWidth() / 14, getHeight() / 2 + 30,
-				getWidth() / 14 + (int) options[1].getWidth() - 10, getHeight()
-						/ 2 + (int) options[1].getHeight() + 20);
-		areaOptions[2] = new Rect(getWidth() / 2 - 20, getHeight() / 2 - 20,
-				getWidth() / 2 + (int) options[2].getWidth(), getHeight() / 2
-						+ (int) options[2].getHeight());
-
-		// Desenho dos Rects para visualizar os testes colisão com o dedo.
-		// canvas.drawRect(areaOptions[0], paint);
-		// canvas.drawRect(areaOptions[1], paint);
-		// canvas.drawRect(areaOptions[2], paint);
+		canvas.drawBitmap(background, null, recBackground, paint);
+		canvas.drawBitmap(etapa01, null, rectEtapa01, paint);
+		canvas.drawBitmap(etapa02, null, rectEtapa02, paint);
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -96,13 +79,18 @@ public class Menu extends View implements Runnable {
 			int a = (int) event.getX();
 			int b = (int) event.getY();
 
-			// Play
-			if (areaOptions[0].contains(a, b)) {
-				Log.i(MainActivity.TAG, "Entrou no Play !! ");
-				etapas = new EscolherEtapa(activity);
-				activity.setContentView(etapas);
-				
+			// Etapa 1
+			if (rectEtapa01.contains(a, b)) {
+				Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
+				SceneManager.Setup((Activity)super.getContext());				
 			}
+			
+			// Etapa 2
+			if (rectEtapa02.contains(a, b)) {
+				Log.i(MainActivity.TAG, "Escolheu a etapa2 !! ");
+				SceneManager.Setup((Activity)super.getContext());				
+			}
+		
 		}
 
 		return super.onTouchEvent(event);
