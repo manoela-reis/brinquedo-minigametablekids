@@ -20,6 +20,8 @@ public class Fase6_Assets extends Scene{
 	int Y;
 	Rect[] rect = new Rect[4];
 
+	int[] HeightBitmap=new int[4];
+	int[] WidthBitmap = new int[4];
 	Rect[] rectColor = new Rect[4];
 
 	public Fase6_Assets(Context context) {
@@ -59,26 +61,37 @@ public class Fase6_Assets extends Scene{
 		this.larg = larg;
 		this.alt = Alt;
 		this.paint=paint;
-		rect[0].set(this.larg / 40, this.alt / 30, this.larg / 6,
-				(int) (1.5f * this.alt / 6));
-		rect[1].set(this.larg / 40, this.alt / 3, this.larg / 6,
-				(int) (3.5f * this.alt / 6));
-		rect[2].set(this.larg / 40, 2 * this.alt / 3, this.larg / 6,
-				(int) (5.5f * this.alt / 6));
-		rect[3].set(this.larg / 40, 2 * this.alt / 3, this.larg / 6,
-				(int) (5.5f * this.alt / 6));
-		rectColor[0].set((int) (6 * this.larg / 20), 5 * this.alt / 8,
-				(int) (9.5 * this.larg / 20), 7 * this.alt / 8);
+		for(int i =0; i<rect.length;i++){
+			WidthBitmap[i] = geometricFigures[i+4].getWidth()*((int)(9 * this.alt / 40)-( this.alt / 40))/geometricFigures[i+4].getHeight();
+		}
+		for(int i =0; i<rectColor.length;i++){
+			HeightBitmap[i] = geometricFigures[i].getHeight()*((int) (15 * this.larg / 40)-(int) (9 * this.larg / 40))/geometricFigures[i].getWidth();
+		}
+		
+		
+		
+		rect[0].set((int)(3.5*this.larg / 40 - WidthBitmap[0]/2), this.alt / 40, (int)(3.5*this.larg / 40 +WidthBitmap[0]/2),
+				(int) (9 * this.alt / 40));
+		rect[1].set((int)(3.5*this.larg / 40 - WidthBitmap[1]/2), 10*this.alt / 40, (int)(3.5*this.larg / 40 + WidthBitmap[1]/2),
+				(int) (18 * this.alt / 40));
+		rect[2].set((int)(3.5*this.larg / 40 - WidthBitmap[2]/2), 20 * this.alt / 40, (int)(3.5*this.larg / 40 + WidthBitmap[2]/2),
+				(int) (28 * this.alt / 40));
+		rect[3].set((int)(3.5*this.larg / 40 - WidthBitmap[3]/2), 30 * this.alt / 40, (int)(3.5*this.larg / 40 + WidthBitmap[3]/2),
+				(int) (38 * this.alt / 40));
 
-		rectColor[1].set((int) (10.9f * this.larg / 20), 5 * this.alt / 8,
-				(int) (14.5f * this.larg / 20), 7 * this.alt / 8);
+		rectColor[0].set((int) (9 * this.larg / 40), 7 * this.alt / 8-HeightBitmap[0],
+				(int) (15 * this.larg / 40), 7 * this.alt / 8);
 
-		rectColor[2].set((int) (15f * this.larg / 20), 5 * this.alt / 8,
-				(int) (18.5f * this.larg / 20), 7 * this.alt / 8);
-	
-		rectColor[3].set((int) (15f * this.larg / 20), 5 * this.alt / 8,
-				(int) (18.5f * this.larg / 20), 7 * this.alt / 8);
-	
+		rectColor[1].set((int) (18 * this.larg / 40), 7 * this.alt / 8-HeightBitmap[1],
+				(int) (24 * this.larg / 40), 7 * this.alt / 8);
+
+		rectColor[2].set((int) (26f * this.larg / 40), 7 * this.alt / 8-HeightBitmap[2],
+				(int) (32 * this.larg / 40), 7 * this.alt / 8);
+HeightBitmap[3]= geometricFigures[3].getHeight()*((int) (38 * this.larg / 40)-(int) (34 * this.larg / 40))/geometricFigures[3].getWidth();
+
+		rectColor[3].set((int) (34 * this.larg / 40), 7 * this.alt / 8-HeightBitmap[3],
+				(int) (38 * this.larg / 40), 7 * this.alt / 8);
+		
 			}
 
 	public void setXY(int x, int y) {
@@ -98,19 +111,19 @@ public class Fase6_Assets extends Scene{
 		
 				rect.set(rectcolor);
 				
-				geometricFigures[i]=geometricFigures[i+3];
+				geometricFigures[i]=geometricFigures[i+4];
 				}
 
 	public void setRectInicial(Rect rec) {
 		for (int i = 0; i < rect.length; i++) {
 			if (rect[i] == rec && i != 0) {
 
-				rect[i].set(this.larg / 40, i * this.alt / 3, this.larg / 6,
-						(int) ((i * 2 + 1.5f) * this.alt / 6));
+				rect[i].set((int)(3.5*this.larg / 40 - WidthBitmap[i]/2), (i *10)* this.alt / 40, (int)(3.5*this.larg / 40 + WidthBitmap[i]/2),
+						(int) (((i *10)+8) * this.alt / 40));
 			}
 			if (rect[i] == rec && i == 0) {
-				rect[i].set(this.larg / 40, this.alt / 30, this.larg / 6,
-						(int) ((i * 2 + 1.5f) * this.alt / 6));
+				rect[i].set((int)(3.5*this.larg / 40 - WidthBitmap[i]/2), this.alt / 40, (int)(3.5*this.larg / 40 + WidthBitmap[i]/2),
+						(int) (9 * this.alt / 40));
 
 			}
 
@@ -131,7 +144,7 @@ public class Fase6_Assets extends Scene{
 
 			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
 
-			canvas.drawBitmap(geometricFigures[i+3], null, rect[i], paint);
+			canvas.drawBitmap(geometricFigures[i+4], null, rect[i], paint);
 		}
 		
 

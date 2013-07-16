@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class Fase2_Assets extends Scene{
+public class Fase2_Assets extends Scene {
 
 	Bitmap[] geometricFigures = new Bitmap[7];
 	ImageManager img;
@@ -20,6 +20,8 @@ public class Fase2_Assets extends Scene{
 	int Y;
 	Rect[] rect = new Rect[3];
 
+	int[] HeightBitmap = new int[3];
+	int[] WidthBitmap = new int[3];
 	Rect[] rectColor = new Rect[3];
 
 	public Fase2_Assets(Context context) {
@@ -55,21 +57,40 @@ public class Fase2_Assets extends Scene{
 	public void setconfig(int larg, int Alt, Paint paint) {
 		this.larg = larg;
 		this.alt = Alt;
-		this.paint=paint;
-		rect[0].set(this.larg / 40, this.alt / 30, this.larg / 6,
-				(int) (1.5f * this.alt / 6));
-		rect[1].set(this.larg / 40, this.alt / 3, this.larg / 6,
-				(int) (3.5f * this.alt / 6));
-		rect[2].set(this.larg / 40, 2 * this.alt / 3, this.larg / 6,
-				(int) (5.5f * this.alt / 6));
-		rectColor[0].set((int) (6 * this.larg / 20), 5 * this.alt / 8,
-				(int) (9.5 * this.larg / 20), 7 * this.alt / 8);
+		this.paint = paint;
+		for (int i = 0; i < rect.length; i++) {
+			WidthBitmap[i] = geometricFigures[i + 3].getWidth()
+					* ((int) (9 * this.alt / 30) - (int)(this.alt / 30))
+					/ geometricFigures[i + 3].getHeight();
+		}
+		for (int i = 0; i < rectColor.length; i++) {
+			HeightBitmap[i] = geometricFigures[i].getHeight()
+					* ((int) (13f * this.larg / 20) - (int) (11f * this.larg / 20))
+					/ geometricFigures[i].getWidth();
+		}
 
-		rectColor[1].set((int) (10.9f * this.larg / 20), 5 * this.alt / 8,
-				(int) (14.5f * this.larg / 20), 7 * this.alt / 8);
+		rect[0].set((int)(3.5*this.larg / 40 - WidthBitmap[0]/2),(int)(this.alt / 30), (int)(3.5*this.larg / 40 +WidthBitmap[0]/2),
+				(int) (9 * this.alt / 30));
+		WidthBitmap[1] = geometricFigures[4].getWidth()
+				* ((int) (19 * this.alt / 30) - (int)(9.5*this.alt / 30))
+				/ geometricFigures[4].getHeight();
+		rect[1].set((int)(3.5*this.larg / 40 - WidthBitmap[1]/2), (int)(9.5*this.alt / 30), (int)(3.5*this.larg / 40 + WidthBitmap[1]/2),
+				(int) (19 * this.alt / 30));
+		WidthBitmap[2] = geometricFigures[5].getWidth()
+				* ((int) (19 * this.alt / 30) - (int)(9.5*this.alt / 30))
+				/ geometricFigures[5].getHeight();
+		rect[2].set((int)(3.5*this.larg / 40 - WidthBitmap[2]/2),(int) (19.5 * this.alt / 30), (int)(3.5*this.larg / 40 + WidthBitmap[2]/2),
+				(int) (29 * this.alt / 30));
+		rectColor[0].set((int) (7 * this.larg / 20), 5 * this.alt / 8,
+				(int) (9 * this.larg / 20), 7 * this.alt / 8);
 
-		rectColor[2].set((int) (15f * this.larg / 20), 5 * this.alt / 8,
-				(int) (18.5f * this.larg / 20), 7 * this.alt / 8);
+		rectColor[1].set((int) (11f * this.larg / 20),
+				(int) (4.3 * this.alt / 8), (int) (13 * this.larg / 20),
+				7 * this.alt / 8);
+
+		rectColor[2].set((int) (15.4f * this.larg / 20),
+				(int) (4.2 * this.alt / 8), (int) (17.4 * this.larg / 20),
+				7 * this.alt / 8);
 	}
 
 	public void setXY(int x, int y) {
@@ -85,23 +106,35 @@ public class Fase2_Assets extends Scene{
 		return rectColor;
 	}
 
-	public void colidiu(Rect rect, Rect rectcolor,int i) {
-		
-				rect.set(rectcolor);
-				
-				geometricFigures[i]=geometricFigures[i+3];
-				}
+	public void colidiu(Rect rect, Rect rectcolor, int i) {
+
+		rect.set(rectcolor);
+
+		geometricFigures[i] = geometricFigures[i + 3];
+	}
 
 	public void setRectInicial(Rect rec) {
+		/*
+		 * for (int i = 0; i < rect.length; i++) { if (rect[i] == rec && i != 0)
+		 * {
+		 * 
+		 * rect[i].set(this.larg / 40, i * this.alt / 3, this.larg / 6, (int)
+		 * ((i * 2 + 1.5f) * this.alt / 6)); } if (rect[i] == rec && i == 0) {
+		 * rect[i].set(this.larg / 40, this.alt / 30, this.larg / 6, (int) ((i *
+		 * 2 + 1.5f) * this.alt / 6));
+		 * 
+		 * } }
+		 */
+
 		for (int i = 0; i < rect.length; i++) {
 			if (rect[i] == rec && i != 0) {
 
-				rect[i].set(this.larg / 40, i * this.alt / 3, this.larg / 6,
-						(int) ((i * 2 + 1.5f) * this.alt / 6));
+				rect[i].set((int)(3.5*this.larg / 40 - WidthBitmap[i]/2), (int)(((i *10)-0.5)* this.alt / 30), (int)(3.5*this.larg / 40 + WidthBitmap[i]/2),
+						(int) (((i *10)+9) * this.alt / 30));
 			}
 			if (rect[i] == rec && i == 0) {
-				rect[i].set(this.larg / 40, this.alt / 30, this.larg / 6,
-						(int) ((i * 2 + 1.5f) * this.alt / 6));
+				rect[i].set((int)(3.5*this.larg / 40 - WidthBitmap[i]/2), this.alt / 30, (int)(3.5*this.larg / 40 + WidthBitmap[i]/2),
+						(int) (9 * this.alt / 30));
 
 			}
 
@@ -118,13 +151,12 @@ public class Fase2_Assets extends Scene{
 
 	public void Draw(Canvas canvas) {
 
-		for(int i=0;i<rect.length;i++){
+		for (int i = 0; i < rect.length; i++) {
 
 			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
 
-			canvas.drawBitmap(geometricFigures[i+3], null, rect[i], paint);
+			canvas.drawBitmap(geometricFigures[i + 3], null, rect[i], paint);
 		}
-		
 
 	}
 }
