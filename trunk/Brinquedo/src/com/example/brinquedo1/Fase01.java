@@ -87,7 +87,7 @@ public class Fase01 extends View implements Runnable {
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 
-		if (period != 0 && hitPoints != totalPoints) {
+		if (hitPoints != totalPoints) {
 			MyCanvas = canvas;
 
 			canvas.drawBitmap(Backgrounds[2], null, Back, paint);
