@@ -1,7 +1,11 @@
 package com.example.brinquedo1;
 
-
 import java.util.Random;
+
+import Gerenciadores.ImageManager;
+import Gerenciadores.SceneManager;
+import Gerenciadores.SoundManager;
+import Gerenciadores.SceneManager.SCENE;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,7 +15,7 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import com.example.brinquedo1.R;
+
 public class Fase02 extends View implements Runnable {
 
 	private long time = 1;
@@ -21,7 +25,7 @@ public class Fase02 extends View implements Runnable {
 	int counter;
 	private Paint paint;
 	private Rect Back = new Rect();
-	int totalPoints ;
+	int totalPoints;
 	int hitPoints = 0;
 	Rect object_down;
 	Rect[] areaObjectsUp = new Rect[3];
@@ -33,6 +37,7 @@ public class Fase02 extends View implements Runnable {
 	Boolean movendo;
 	Rect mov;
 
+	public SoundManager sound;
 	Context context;
 	Rect[] rectsColor;
 
@@ -43,6 +48,10 @@ public class Fase02 extends View implements Runnable {
 		setClickable(true);
 		setLongClickable(true);
 
+		sound = SoundManager.getInstance();
+		SoundManager.getInstance().StopAllSongs();
+		SoundManager.getInstance().playSound(R.raw.musicgame, "Game", true,
+				context);
 		Backgrounds = new Bitmap[3];
 		img = new ImageManager(context);
 		paint = new Paint();
@@ -50,11 +59,11 @@ public class Fase02 extends View implements Runnable {
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(20);
 
-		this.asset=asset;
+		this.asset = asset;
 		geometricFigures = asset.figuras();
 		rects = asset.getRect();
 		rectsColor = asset.getRectColor();
-		totalPoints=rectsColor.length;
+		totalPoints = rectsColor.length;
 		Backgrounds[0] = img.ImageManager("bgCongrats.bmp");
 		Backgrounds[1] = img.ImageManager("bgGameOver.bmp");
 		Backgrounds[2] = img.ImageManager("fundo.png");
@@ -64,14 +73,15 @@ public class Fase02 extends View implements Runnable {
 
 		// TODO Auto-generated constructor stub
 	}
-	public void setFase(Scene carreg){
-		this.asset=carreg;
+
+	public void setFase(Scene carreg) {
+		this.asset = carreg;
 		geometricFigures = asset.figuras();
 		rects = asset.getRect();
 		rectsColor = asset.getRectColor();
 		asset.setconfig(getWidth(), getHeight(), paint);
 
-		totalPoints=rectsColor.length;
+		totalPoints = rectsColor.length;
 	}
 
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -104,11 +114,11 @@ public class Fase02 extends View implements Runnable {
 		// Condição de vitória.
 		if (hitPoints == totalPoints) {
 			// classe de vitoria
-		//	canvas.drawBitmap(Backgrounds[0], null, Back, paint);
+			// canvas.drawBitmap(Backgrounds[0], null, Back, paint);
 			SceneManager.ChangeScene(context);
-			SoundManager.getInstance().playSound(R.raw.acerto, "sound",
-					false, context);
-			hitPoints=0;
+			SoundManager.getInstance().playSound(R.raw.acerto, "sound", false,
+					context);
+			hitPoints = 0;
 		}
 	}
 
@@ -136,24 +146,13 @@ public class Fase02 extends View implements Runnable {
 			// sua respectiva imagem colorida.
 
 			if (mov != null) {
-				if (mov.contains(c, d)) {
+				if (movendo) {
+					positionX = (int) event.getX();
+					positionY = (int) event.getY();
 
-					if (movendo) {
-						positionX = (int) event.getX();
-						positionY = (int) event.getY();
+					asset.setXY(positionX, positionY);
 
-						asset.setXY(positionX, positionY);
-
-						asset.setRect(mov);
-
-					}
-
-				} else {
-					movendo = false;
-
-					Log.i("ooi", "entrou no sssset");
-					if (mov != null)
-						asset.setRectInicial(mov);
+					asset.setRect(mov);
 				}
 
 			}
@@ -174,8 +173,13 @@ public class Fase02 extends View implements Runnable {
 							movendo = false;
 							mov = null;
 							hitPoints++;
-							 SoundManager.getInstance().playSound(R.raw.acerto, "MenuSound",false,context);
-							 
+							SoundManager.getInstance().playSound(R.raw.acerto,
+									"MenuSound", false, context);
+
+						} else {
+							SoundManager.getInstance().playSound(R.raw.erro,
+									"MenuSound", false, context);
+
 						}
 					}
 				}

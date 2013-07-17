@@ -2,6 +2,7 @@ package com.example.brinquedo1;
 
 import java.util.Random;
 
+import Gerenciadores.ImageManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

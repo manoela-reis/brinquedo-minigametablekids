@@ -1,0 +1,134 @@
+package Telas_Selecao;
+
+import com.example.brinquedo1.MainActivity;
+import com.example.brinquedo1.R;
+
+import ETAPA1.Fase2_Assets;
+import Gerenciadores.ImageManager;
+import Gerenciadores.SoundManager;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.media.AudioManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+
+public class Menu extends View implements Runnable {
+	private Bitmap background;
+	private Bitmap[] options;
+	private Rect[] areaOptions;
+	private ImageManager picture;
+	Paint paint;
+	private View etapas;
+	Activity activity;
+	private Rect Back = new Rect();
+	private Fase2_Assets asset;
+	private static int positionX;
+	private static int positionY;
+
+	public Menu(Context context) {
+		super(context);
+
+		setFocusableInTouchMode(true);
+		setClickable(true);
+		setLongClickable(true);
+		picture = new ImageManager(context);
+		paint = new Paint();
+
+
+		SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu", true, context);
+
+		activity = (Activity) context;
+		options = new Bitmap[3];
+		areaOptions = new Rect[3];
+
+		background = picture.ImageManager("fundomenu.png");
+		options[0] = picture.ImageManager("play.png");
+		options[1] = picture.ImageManager("credits.png");
+		options[2] = picture.ImageManager("quit.png");
+
+		// TODO Auto-generated constructor stub
+	}
+
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+
+		Back.set(0, 0, getWidth(), getHeight());
+	}
+
+	public void draw(Canvas canvas) {
+		super.draw(canvas);
+
+		canvas.drawBitmap(background, null, Back, paint);
+		canvas.drawBitmap(options[0], getWidth() / 3, getHeight() / 2, paint);
+		// canvas.drawBitmap(options[1], getWidth()/14, getHeight()/1.6f,
+		// paint);
+		// canvas.drawBitmap(options[2], getWidth()/1.5f, getHeight()/1.5f,
+		// paint);
+
+		areaOptions[0] = new Rect(getWidth() / 3, getHeight() / 2, getWidth()
+				/ 3 + (int) options[0].getWidth(), getHeight() / 2
+				+ (int) options[0].getHeight());
+		areaOptions[1] = new Rect(getWidth() / 14, getHeight() / 2 + 30,
+				getWidth() / 14 + (int) options[1].getWidth() - 10, getHeight()
+						/ 2 + (int) options[1].getHeight() + 20);
+		areaOptions[2] = new Rect(getWidth() / 2 - 20, getHeight() / 2 - 20,
+				getWidth() / 2 + (int) options[2].getWidth(), getHeight() / 2
+						+ (int) options[2].getHeight());
+
+		// Desenho dos Rects para visualizar os testes colisão com o dedo.
+		// canvas.drawRect(areaOptions[0], paint);
+		// canvas.drawRect(areaOptions[1], paint);
+		// canvas.drawRect(areaOptions[2], paint);
+	}
+
+	public boolean onTouchEvent(MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			Log.i(MainActivity.TAG, "Entrou no action down");
+		}
+
+		if (event.getAction() == MotionEvent.ACTION_MOVE) {
+			Log.i(MainActivity.TAG, "Entrou no action move");
+		}
+
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+			Log.i(MainActivity.TAG, "Entrou no action up");
+			int a = (int) event.getX();
+			int b = (int) event.getY();
+
+			// Play
+			if (areaOptions[0].contains(a, b)) {
+				Log.i(MainActivity.TAG, "Entrou no Play !! ");
+				etapas = new EscolherEtapa(activity);
+				
+				activity.setContentView(etapas);
+				
+			}
+		}
+
+		return super.onTouchEvent(event);
+	}
+
+	public void run() {
+		while (true) {
+			try {
+				Thread.sleep(1);
+			}
+
+			catch (Exception e) {
+				Log.e("Deu erro", "Quem sabe mete o pe");
+			}
+
+			postInvalidate();
+		}
+		// TODO Auto-generated method stub
+	}
+
+}
