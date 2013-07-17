@@ -82,13 +82,13 @@ public class EscolherEtapa extends View implements Runnable {
 			// Etapa 1
 			if (rectEtapa01.contains(a, b)) {
 				Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
-				SceneManager.Setup((Activity)super.getContext());				
+				SceneManager.Setup((Activity)super.getContext(),1);				
 			}
 			
 			// Etapa 2
 			if (rectEtapa02.contains(a, b)) {
 				Log.i(MainActivity.TAG, "Escolheu a etapa2 !! ");
-				SceneManager.Setup((Activity)super.getContext());				
+				SceneManager.Setup((Activity)super.getContext(),2);				
 			}
 		
 		}

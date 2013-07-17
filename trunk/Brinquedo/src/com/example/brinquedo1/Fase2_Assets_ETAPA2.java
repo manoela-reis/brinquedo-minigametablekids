@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class Fase2_Assets extends Scene {
+public class Fase2_Assets_ETAPA2 extends Scene {
 
 	Bitmap[] geometricFigures = new Bitmap[7];
 	ImageManager img;
@@ -24,17 +24,17 @@ public class Fase2_Assets extends Scene {
 	int[] WidthBitmap = new int[3];
 	Rect[] rectColor = new Rect[3];
 
-	public Fase2_Assets(Context context) {
+	public Fase2_Assets_ETAPA2(Context context) {
 
 		// int current = rnd.nextInt(3);
 		img = new ImageManager(context);
 
-		geometricFigures[0] = img.ImageManager("passaroEdit.png");
-		geometricFigures[1] = img.ImageManager("girafaEdit.png");
-		geometricFigures[2] = img.ImageManager("avestruzEdit.png");
-		geometricFigures[3] = img.ImageManager("passaroCorEdit.png");
-		geometricFigures[4] = img.ImageManager("girafaCor.png");
-		geometricFigures[5] = img.ImageManager("avestruzCorEdit.png");
+		geometricFigures[0] = img.ImageManager("fase 2.2 javali.png");
+		geometricFigures[1] = img.ImageManager("fase 2.2 zebra.png");
+		geometricFigures[2] = img.ImageManager("fase 2.2 rino.png");
+		geometricFigures[3] = img.ImageManager("javaliCor-05.png");
+		geometricFigures[4] = img.ImageManager("zebra-07.png");
+		geometricFigures[5] = img.ImageManager("rinoCor.png");
 		geometricFigures[6] = geometricFigures[3];
 		rect[0] = new Rect();
 		rect[1] = new Rect();
@@ -65,7 +65,7 @@ public class Fase2_Assets extends Scene {
 		}
 		for (int i = 0; i < rectColor.length; i++) {
 			HeightBitmap[i] = geometricFigures[i].getHeight()
-					* ((int) (12.8f * this.larg / 20) - (int) (11f * this.larg / 20))
+					* ((int) (8.8f * this.larg / 20) - (int) (6 * this.larg / 20))
 					/ geometricFigures[i].getWidth();
 		}
 
@@ -77,21 +77,23 @@ public class Fase2_Assets extends Scene {
 		rect[1].set((int)(3.5*this.larg / 40 - WidthBitmap[1]/2), (int)(9.5*this.alt / 30), (int)(3.5*this.larg / 40 + WidthBitmap[1]/2),
 				(int) (19 * this.alt / 30));
 		WidthBitmap[2] = geometricFigures[5].getWidth()
-				* ((int) (19 * this.alt / 30) - (int)(9.5*this.alt / 30))
+				* ((int) (28 * this.alt / 30) - (int)(19*this.alt / 30))
 				/ geometricFigures[5].getHeight();
-		rect[2].set((int)(3.5*this.larg / 40 - WidthBitmap[2]/2),(int) (19.5 * this.alt / 30), (int)(3.5*this.larg / 40 + WidthBitmap[2]/2),
-				(int) (29 * this.alt / 30));
-		rectColor[0].set((int) (7 * this.larg / 20), 7 * this.alt / 8-HeightBitmap[0],
+		rect[2].set((int)(3.5*this.larg / 40 - WidthBitmap[2]/2),(int) (19 * this.alt / 30), (int)(3.5*this.larg / 40 + WidthBitmap[2]/2),
+				(int) (28 * this.alt / 30));
+		rectColor[0].set((int) (6 * this.larg / 20), 7 * this.alt / 8-HeightBitmap[0],
 				(int) (8.8f * this.larg / 20), 7 * this.alt / 8);
-
-		rectColor[1].set((int) (11f * this.larg / 20),
-				(int) (7 * this.alt / 8)-HeightBitmap[1], (int) (12.8 * this.larg / 20),
+		HeightBitmap[1] = geometricFigures[1].getHeight()
+				* ((int) (13.5 * this.larg / 20) - (int) (10.5f * this.larg / 20))
+				/ geometricFigures[1].getWidth();
+		rectColor[1].set((int) (10.5f * this.larg / 20),
+				(int) (7 * this.alt / 8)-HeightBitmap[1], (int) (13.5 * this.larg / 20),
 				7 * this.alt / 8);
 		HeightBitmap[2] = geometricFigures[2].getHeight()
-				* ((int) (17.4f * this.larg / 20) - (int) (15.9f * this.larg / 20))
+				* ((int) (18.5 * this.larg / 20) - (int) (14.9f * this.larg / 20))
 				/ geometricFigures[2].getWidth();
-		rectColor[2].set((int) (15.9f * this.larg / 20),
-				(int) (7 * this.alt / 8)-HeightBitmap[2], (int) (17.4 * this.larg / 20),
+		rectColor[2].set((int) (14.9f * this.larg / 20),
+				(int) (7 * this.alt / 8)-HeightBitmap[2], (int) (18.5 * this.larg / 20),
 				(int)(7 * this.alt / 8));
 	}
 
