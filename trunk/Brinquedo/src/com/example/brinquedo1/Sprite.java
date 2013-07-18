@@ -1,6 +1,4 @@
-package com.nave.segundaguerra.game;
-
-import com.nave.segundaguerra.activitys.GerenciadorActivity;
+package com.example.brinquedo1;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
