@@ -37,9 +37,12 @@ public class Fase02 extends View implements Runnable {
 	Boolean movendo;
 	Rect mov;
 
-	public SoundManager sound;
+	public SoundManager sound = SoundManager.getInstance();
 	Context context;
 	Rect[] rectsColor;
+	public static long deltaTime;
+	public long lastTimeCount;
+
 
 	public Fase02(Context context, Scene asset) {
 		super(context);
@@ -48,10 +51,8 @@ public class Fase02 extends View implements Runnable {
 		setClickable(true);
 		setLongClickable(true);
 
-		sound = SoundManager.getInstance();
-		SoundManager.getInstance().StopAllSongs();
-		SoundManager.getInstance().playSound(R.raw.musicgame, "Game", true,
-				context);
+		sound.StopAllSongs();
+		sound.playSound(R.raw.musicgame, "Game", true, context);
 		Backgrounds = new Bitmap[3];
 		img = new ImageManager(context);
 		paint = new Paint();
@@ -88,7 +89,6 @@ public class Fase02 extends View implements Runnable {
 		super.onSizeChanged(w, h, oldw, oldh);
 
 		asset.setconfig(getWidth(), getHeight(), paint);
-
 		positionX = (int) getWidth() / 2;
 		positionY = (int) getHeight() / 2;
 		asset.setXY(positionX, positionY);
@@ -120,6 +120,7 @@ public class Fase02 extends View implements Runnable {
 					context);
 			hitPoints = 0;
 		}
+
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -173,12 +174,12 @@ public class Fase02 extends View implements Runnable {
 							movendo = false;
 							mov = null;
 							hitPoints++;
-							SoundManager.getInstance().playSound(R.raw.acerto,
-									"MenuSound", false, context);
+							sound.playSound(R.raw.acerto, "MenuSound", false,
+									context);
 
 						} else {
-							SoundManager.getInstance().playSound(R.raw.erro,
-									"MenuSound", false, context);
+							sound.playSound(R.raw.erro, "MenuSound", false,
+									context);
 
 						}
 					}
@@ -205,6 +206,11 @@ public class Fase02 extends View implements Runnable {
 			counter = 0;
 		}
 
+		this.deltaTime = System.currentTimeMillis() - this.lastTimeCount;
+		this.lastTimeCount = System.currentTimeMillis();
+
+		
+			
 	}
 
 	public void run() {

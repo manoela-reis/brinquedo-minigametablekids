@@ -19,6 +19,7 @@ public abstract class Scene {
 		return geometricFigures;
 	}
 
+
 	public void Variar(int sort) {
 	}
 

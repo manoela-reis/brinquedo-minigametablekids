@@ -3,6 +3,7 @@ package ETAPA1;
 import java.util.Random;
 
 import com.example.brinquedo1.Scene;
+import com.example.brinquedo1.Sprite;
 
 import Gerenciadores.ImageManager;
 import android.content.Context;
@@ -32,6 +33,7 @@ public class Fase1_Assets extends Scene {
 	Rect[] rectColor = new Rect[3];
 //	Rect[] rectWhite = new Rect[3];
 
+
 	public Fase1_Assets(Context context) {
 
 		// int current = rnd.nextInt(3);
@@ -50,6 +52,7 @@ public class Fase1_Assets extends Scene {
 		rectColor[0] = new Rect();
 		rectColor[1] = new Rect();
 		rectColor[2] = new Rect();
+
 
 	}
 
@@ -103,6 +106,7 @@ public class Fase1_Assets extends Scene {
 		rectColor[2].set((int) (15f * this.larg / 20),
 				(int) (4.9f * this.alt / 8), (int) (18.2 * this.larg / 20),
 				(int) (4.9f * this.alt / 8) + HeightBitmap[2]);
+
 	}
 
 	public void setXY(int x, int y) {
@@ -155,12 +159,10 @@ public class Fase1_Assets extends Scene {
 
 	public void Draw(Canvas canvas) {
 
-			
 		for (int i = 0; i < rect.length; i++) {
 
 			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
 			canvas.drawBitmap(geometricFigures[i + 3], null, rect[i], paint);
 		}
-
 	}
 }

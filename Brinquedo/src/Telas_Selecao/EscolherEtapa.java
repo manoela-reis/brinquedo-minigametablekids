@@ -5,6 +5,7 @@ import com.example.brinquedo1.MainActivity;
 import ETAPA1.Fase2_Assets;
 import Gerenciadores.ImageManager;
 import Gerenciadores.SceneManager;
+import Gerenciadores.SceneManager.SCENE;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -79,25 +80,55 @@ public class EscolherEtapa extends View implements Runnable {
 		this.paint = paint;
 		for (int i = 0; i < Etapa1.length; i++) {
 			alturaideal[i] = etapa01[i].getWidth()
-					* (alt / 4 - (int) (0.3 * alt / 4))
+					* ((int) (2.3 * alt / 8) - (int) (0.5 * alt / 8))
 					/ etapa01[i].getHeight();
 		}
-		for (int i = 0; i < Etapa1.length; i++) {
-
-			Etapa1[i]
-					.set((i+1)*larg/9, (int) (0.3 * alt / 4), (i+1)*larg/9+alturaideal[i], alt / 4);
+		for (int i = 9; i < etapa01.length; i++) {
+			alturaideal[i] = etapa01[i].getWidth()
+					* ((int) (2.3 * alt / 8) - (int) (0.5 * alt / 8))
+					/ etapa01[i].getHeight();
+		}
+		for (int i = 0; i < 5; i++) {
+			Etapa1[i].set((int) ((3.5 * i + 1) * larg / 18),
+					(int) (0.5 * alt / 8),
+					(int) ((3.5 * i + 1) * larg / 18 + alturaideal[i]),
+					(int) (2.3 * alt / 8));
+			Etapa2[i].set((int) ((3.5 * i + 1) * larg / 18),
+					(int) (4 * alt / 8),
+					(int) ((3.5 * i + 1) * larg / 18 + alturaideal[i+9]),
+					(int) (5.8 * alt / 8));
 
 		}
+		for (int p = 0; p < 4; p++) {
+			Etapa1[p + 5].set((int) ((2.5  + p*3.5) * larg / 18),
+					(int) (2.2 * alt / 8),
+					(int) ((2.5  + p*3.5) * larg / 18 + alturaideal[p + 5]),
+					(int) (4.0 * alt / 8));
+			Etapa2[p + 5].set((int) ((2.5 +( p *3.5)) * larg / 18),
+					(int) (6 * alt / 8),
+					(int) ((2.5 + (p *3.5)) * larg / 18 + alturaideal[p + 14]),
+					(int) (7.8 * alt / 8));
 
+		}
 	}
 
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 
 		canvas.drawBitmap(background, null, recBackground, paint);
-		for (int i = 0; i < Etapa1.length; i++) {
+		for (int i = 0; i < 5; i++) {
 
 			canvas.drawBitmap(etapa01[i], null, Etapa1[i], paint);
+			canvas.drawBitmap(etapa01[9 + i], null, Etapa2[i], paint);
+
+		}
+		for (int i = 0; i < 4; i++) {
+
+			canvas.drawBitmap(etapa01[Etapa1.length - 1 - i], null,
+					Etapa1[i + 5], paint);
+
+			canvas.drawBitmap(etapa01[2*Etapa1.length - 1 - i], null,
+					Etapa2[i + 5], paint);
 
 		}
 	}
@@ -116,17 +147,38 @@ public class EscolherEtapa extends View implements Runnable {
 			int a = (int) event.getX();
 			int b = (int) event.getY();
 
-			// Etapa 1
-			/*if (rectEtapa01.contains(a, b)) {
-				Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
-				SceneManager.Setup((Activity) super.getContext(), 1);
-			}
+			for(int i =0;i<5;i++){
+				 if (Etapa1[i].contains(a, b)) {
+					 Log.i(MainActivity.TAG,
+						  "Escolheu a Etapa1!! ");
+					 SceneManager.Setup((Activity)super.getContext(), 1,i);
+					 
 
-			// Etapa 2
-			if (rectEtapa02.contains(a, b)) {
-				Log.i(MainActivity.TAG, "Escolheu a etapa2 !! ");
-				SceneManager.Setup((Activity) super.getContext(), 2);
-			}*/
+					 }
+				 if (Etapa2[i].contains(a, b)) {
+					 Log.i(MainActivity.TAG,
+						  "Escolheu a Etapa1!! ");
+					 SceneManager.Setup((Activity)super.getContext(), 2,i);
+
+					 }
+			}
+			for(int i =0;i<4;i++){
+				 if (Etapa1[8-i].contains(a, b)) {
+					 Log.i(MainActivity.TAG,
+						  "Escolheu a Etapa1!! ");
+					 SceneManager.Setup((Activity)super.getContext(), 1,8-i);
+
+					 }
+				 if (Etapa2[8-i].contains(a, b)) {
+					 Log.i(MainActivity.TAG,
+						  "Escolheu a Etapa1!! ");
+					 SceneManager.Setup((Activity)super.getContext(), 2,8-i);
+
+					 }
+			}
+			 
+			  
+			 
 
 		}
 

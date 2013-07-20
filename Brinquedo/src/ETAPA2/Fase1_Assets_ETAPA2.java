@@ -3,6 +3,7 @@ package ETAPA2;
 import java.util.Random;
 
 import com.example.brinquedo1.Scene;
+import com.example.brinquedo1.Sprite;
 
 
 import Gerenciadores.ImageManager;
@@ -29,7 +30,7 @@ public class Fase1_Assets_ETAPA2 extends Scene {
 	int[] HeightBitmap=new int[3];
 	int[] WidthBitmap = new int[3];
 	Rect[] rect = new Rect[3];
-
+Sprite sprite;
 	Rect[] rectColor = new Rect[3];
 
 	public Fase1_Assets_ETAPA2(Context context) {
