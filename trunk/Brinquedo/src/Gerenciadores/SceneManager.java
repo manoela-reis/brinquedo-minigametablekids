@@ -69,15 +69,15 @@ public class SceneManager {
 		if (fase + 1 == 4) {
 			carregar = new Fase4_Assets(game);
 
-			SceneManager.currentScene = SCENE.SCN_LEVEL_05;
+			SceneManager.currentScene = SCENE.SCN_LEVEL_04;
 		}
 		if (fase + 1 == 5) {
-			carregar = new Fase6_Assets(game);
+			carregar = new Fase5_Assets(game);
 
-			SceneManager.currentScene = SCENE.SCN_LEVEL_06;
+			SceneManager.currentScene = SCENE.SCN_LEVEL_05;
 		}
 		if (fase + 1 == 6) {
-			carregar = new Fase7_Assets(game);
+			carregar = new Fase6_Assets(game);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_06;
 		}
@@ -87,7 +87,7 @@ public class SceneManager {
 			SceneManager.currentScene = SCENE.SCN_LEVEL_07;
 		}
 		if (fase + 1 == 8) {
-			carregar = new Fase1_Assets(game);
+			carregar = new Fase8_Assets(game);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_08;
 		}
@@ -117,15 +117,15 @@ public class SceneManager {
 		if (fase + 1 == 4) {
 			carregar = new Fase4_Assets_ETAPA2(game);
 
-			SceneManager.currentScene = SCENE.SCN_LEVEL_05_ETAPA2;
+			SceneManager.currentScene = SCENE.SCN_LEVEL_04_ETAPA2;
 		}
 		if (fase + 1 == 5) {
-			carregar = new Fase6_Assets_ETAPA2(game);
+			carregar = new Fase5_Assets_ETAPA2(game);
 
-			SceneManager.currentScene = SCENE.SCN_LEVEL_06_ETAPA2;
+			SceneManager.currentScene = SCENE.SCN_LEVEL_05_ETAPA2;
 		}
 		if (fase + 1 == 6) {
-			carregar = new Fase7_Assets_ETAPA2(game);
+			carregar = new Fase6_Assets_ETAPA2(game);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_06_ETAPA2;
 		}
@@ -135,7 +135,7 @@ public class SceneManager {
 			SceneManager.currentScene = SCENE.SCN_LEVEL_07_ETAPA2;
 		}
 		if (fase + 1 == 8) {
-			carregar = new Fase1_Assets_ETAPA2(game);
+			carregar = new Fase8_Assets_ETAPA2(game);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_08_ETAPA2;
 		}
