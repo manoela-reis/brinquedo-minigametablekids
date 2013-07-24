@@ -39,6 +39,7 @@ public class Fase02 extends View implements Runnable, Killable {
 	Rect[] rects;
 	Boolean movendo;
 	Rect mov;
+	public static boolean tocarSom = true;
 
 	public SoundManager sound = SoundManager.getInstance();
 	Context context;
@@ -57,7 +58,11 @@ public class Fase02 extends View implements Runnable, Killable {
 		
 		ElMatador.getInstance().add(this);
 		sound.StopAllSongs();
-		sound.playSound(R.raw.musicgame, "Game", true, context);
+		
+		if (tocarSom == true)
+		{
+			sound.playSound(R.raw.musicgame, "Game", true, context);
+		}
 		Backgrounds = new Bitmap[3];
 		img = new ImageManager(context);
 		paint = new Paint();
@@ -166,15 +171,19 @@ public class Fase02 extends View implements Runnable, Killable {
 							rects[i].setEmpty();
 							movendo = false;
 							mov = null;
+							if (tocarSom == true)
+							{
 							sound.playSound(R.raw.acerto, "MenuSound", false,
 									context);
-
+							}
 
 							hitPoints++;
 						} else {
+							if (tocarSom == true)
+							{
 							sound.playSound(R.raw.erro, "MenuSound", false,
 									context);
-
+							}
 						}
 					}
 				}
@@ -211,8 +220,11 @@ public class Fase02 extends View implements Runnable, Killable {
 			}
 			
 			SceneManager.ChangeScene(context);
+			if (tocarSom == true)
+			{
 			SoundManager.getInstance().playSound(R.raw.acerto, "sound", false,
 					context);
+			}
 			hitPoints = 0;
 		}
 

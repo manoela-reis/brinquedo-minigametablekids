@@ -1,5 +1,6 @@
 package Telas_Selecao;
 
+import com.example.brinquedo1.Fase02;
 import com.example.brinquedo1.MainActivity;
 import com.example.brinquedo1.R;
 import com.example.brinquedo1.Sprite;
@@ -30,6 +31,7 @@ public class Menu extends View implements Runnable, Killable {
 	private ImageManager picture;
 	Paint paint;
 	private View etapas;
+	private View creditosScene;
 	Activity activity;
 	private Rect Back = new Rect();
 	Sprite spriteGirafa;
@@ -51,7 +53,8 @@ public class Menu extends View implements Runnable, Killable {
 	private Rect Creditos;
 	private Rect Config;
 	private Rect som;
-
+	public SoundManager sound = SoundManager.getInstance();	
+	
 	public Menu(Context context) {
 		super(context);
 
@@ -60,9 +63,7 @@ public class Menu extends View implements Runnable, Killable {
 		setLongClickable(true);
 		picture = new ImageManager(context);
 		paint = new Paint();
-
-	
-
+		
 		activity = (Activity) context;
 		options = new Bitmap[3];
 		areaOptions = new Rect[3];
@@ -88,6 +89,7 @@ public class Menu extends View implements Runnable, Killable {
 
 		SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
 				true, context);
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -176,12 +178,29 @@ public class Menu extends View implements Runnable, Killable {
 				}
 
 			}
-			if (Creditos.contains(a, b)) {
-				Log.i(MainActivity.TAG, "Entrou no Play !! ");
-
+			
+			if (Creditos.contains(a, b)) 
+			{
+				Log.i(MainActivity.TAG, "Entrou no créditos !! ");
+	//			SoundManager.getInstance().StopSong("MusicMenu");
+				creditosScene = new Creditos(activity);
+				activity.setContentView(creditosScene);
 			}
-			if (som.contains(a, b)) {
-
+			
+			if (som.contains(a, b)) 
+			{
+				if (Fase02.tocarSom == true)
+				{
+					Fase02.tocarSom = false;
+					sound.StopAllSongs();					
+				}
+				
+				else {
+					Fase02.tocarSom = true;
+					SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
+							true, super.getContext());
+				}
+				
 			}
 		}
 
@@ -249,7 +268,6 @@ public class Menu extends View implements Runnable, Killable {
 
 		ativo = false;
 		System.exit(0);
-
 	}
 
 }
