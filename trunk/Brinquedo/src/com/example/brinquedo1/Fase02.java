@@ -2,7 +2,9 @@ package com.example.brinquedo1;
 
 import java.util.Random;
 
+import Gerenciadores.ElMatador;
 import Gerenciadores.ImageManager;
+import Gerenciadores.Killable;
 import Gerenciadores.SceneManager;
 import Gerenciadores.SoundManager;
 import Gerenciadores.SceneManager.SCENE;
@@ -16,11 +18,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Fase02 extends View implements Runnable {
+public class Fase02 extends View implements Runnable, Killable {
 
 	private long time = 1;
 	Bitmap[] geometricFigures = new Bitmap[7];
 	Bitmap[] Backgrounds;
+	private boolean ativo = true;
 	int period = 60;
 	int counter;
 	private Paint paint;
@@ -51,6 +54,8 @@ public class Fase02 extends View implements Runnable {
 		setClickable(true);
 		setLongClickable(true);
 
+		
+		ElMatador.getInstance().add(this);
 		sound.StopAllSongs();
 		sound.playSound(R.raw.musicgame, "Game", true, context);
 		Backgrounds = new Bitmap[3];
@@ -98,28 +103,16 @@ public class Fase02 extends View implements Runnable {
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 
-		if (hitPoints != totalPoints) {
-
+	
 			canvas.drawBitmap(Backgrounds[2], null, Back, paint);
 
 			asset.Draw(canvas);
-		}
+		
 
 		// Condição de derrota.
-		if (period == 0) {
-			// classe de derrota
-			// canvas.drawBitmap(Backgrounds[1], null, Back, paint);
-		}
-
+	
 		// Condição de vitória.
-		if (hitPoints == totalPoints) {
-			// classe de vitoria
-			// canvas.drawBitmap(Backgrounds[0], null, Back, paint);
-			SceneManager.ChangeScene(context);
-			SoundManager.getInstance().playSound(R.raw.acerto, "sound", false,
-					context);
-			hitPoints = 0;
-		}
+		
 
 	}
 
@@ -173,10 +166,11 @@ public class Fase02 extends View implements Runnable {
 							rects[i].setEmpty();
 							movendo = false;
 							mov = null;
-							hitPoints++;
 							sound.playSound(R.raw.acerto, "MenuSound", false,
 									context);
 
+
+							hitPoints++;
 						} else {
 							sound.playSound(R.raw.erro, "MenuSound", false,
 									context);
@@ -205,6 +199,22 @@ public class Fase02 extends View implements Runnable {
 			period -= 1;
 			counter = 0;
 		}
+		if (hitPoints == totalPoints) {
+			// classe de vitoria
+			// canvas.drawBitmap(Backgrounds[0], null, Back, paint);
+			try {
+				Thread.sleep(1000);
+			}
+
+			catch (Exception e) {
+				Log.e("Deu erro", "Quem sabe mete o pe");
+			}
+			
+			SceneManager.ChangeScene(context);
+			SoundManager.getInstance().playSound(R.raw.acerto, "sound", false,
+					context);
+			hitPoints = 0;
+		}
 
 		this.deltaTime = System.currentTimeMillis() - this.lastTimeCount;
 		this.lastTimeCount = System.currentTimeMillis();
@@ -214,7 +224,7 @@ public class Fase02 extends View implements Runnable {
 	}
 
 	public void run() {
-		while (true) {
+		while (ativo) {
 			try {
 				Thread.sleep(time);
 			}
@@ -227,5 +237,10 @@ public class Fase02 extends View implements Runnable {
 			postInvalidate();
 		}
 		// TODO Auto-generated method stub
+	}
+	public void killMeSoftly()
+	{
+		ativo = false;
+
 	}
 }

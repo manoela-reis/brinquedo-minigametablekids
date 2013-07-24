@@ -6,6 +6,7 @@ import com.example.brinquedo1.Sprite;
 
 import ETAPA1.Fase2_Assets;
 import Gerenciadores.ImageManager;
+import Gerenciadores.Killable;
 import Gerenciadores.SceneManager;
 import Gerenciadores.SoundManager;
 import android.app.Activity;
@@ -22,7 +23,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
-public class Menu extends View implements Runnable {
+public class Menu extends View implements Runnable, Killable {
 	private Bitmap background;
 	private Bitmap[] options;
 	private Rect[] areaOptions;
@@ -34,7 +35,7 @@ public class Menu extends View implements Runnable {
 	Sprite spriteGirafa;
 	Sprite spritePlay;
 	Boolean setup = true;
-
+	private boolean ativo = true;
 	Sprite spriteConfig;
 	public static long deltaTime;
 	public long lastTimeCount;
@@ -60,8 +61,7 @@ public class Menu extends View implements Runnable {
 		picture = new ImageManager(context);
 		paint = new Paint();
 
-		SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
-				true, context);
+	
 
 		activity = (Activity) context;
 		options = new Bitmap[3];
@@ -83,8 +83,11 @@ public class Menu extends View implements Runnable {
 		this.spritePlay.Modificar(1);
 		areaOptions[1] = new Rect();
 		processo = new Thread(this);
+		
 		processo.start();
 
+		SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
+				true, context);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -158,7 +161,7 @@ public class Menu extends View implements Runnable {
 			Log.i(MainActivity.TAG, "Entrou no action down");
 			int a = (int) event.getX();
 			int b = (int) event.getY();
-			
+
 			if (Config.contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
 				if (!spriteConfig.status && setup) {
@@ -177,9 +180,8 @@ public class Menu extends View implements Runnable {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
 
 			}
-			if(som.contains(a, b)){
-				
-				
+			if (som.contains(a, b)) {
+
 			}
 		}
 
@@ -202,14 +204,13 @@ public class Menu extends View implements Runnable {
 
 			}
 
-		
 		}
 
 		return super.onTouchEvent(event);
 	}
 
 	public void run() {
-		while (true) {
+		while (ativo) {
 			try {
 				Thread.sleep(time);
 
@@ -240,6 +241,14 @@ public class Menu extends View implements Runnable {
 				spriteConfig.Voltar(deltaTime);
 			}
 		}
+
+	}
+
+	@Override
+	public void killMeSoftly() {
+
+		ativo = false;
+		System.exit(0);
 
 	}
 

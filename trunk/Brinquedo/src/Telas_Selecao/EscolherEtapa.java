@@ -3,7 +3,9 @@ package Telas_Selecao;
 import com.example.brinquedo1.MainActivity;
 
 import ETAPA1.Fase2_Assets;
+import Gerenciadores.ElMatador;
 import Gerenciadores.ImageManager;
+import Gerenciadores.Killable;
 import Gerenciadores.SceneManager;
 import Gerenciadores.SceneManager.SCENE;
 import android.app.Activity;
@@ -20,7 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
-public class EscolherEtapa extends View implements Runnable {
+public class EscolherEtapa extends View implements Runnable, Killable {
 	private Bitmap background;
 	private Bitmap[] etapa01 = new Bitmap[18];
 
@@ -36,7 +38,7 @@ public class EscolherEtapa extends View implements Runnable {
 	private Fase2_Assets asset;
 	private static int positionX;
 	private static int positionY;
-
+	private boolean ativo = true;
 	int[] alturaideal = new int[18];
 
 	public EscolherEtapa(Context context) {
@@ -49,6 +51,8 @@ public class EscolherEtapa extends View implements Runnable {
 		paint = new Paint();
 
 		activity = (Activity) context;
+		ElMatador.getInstance().add(this);
+
 
 		background = picture.ImageManager("cenario_SelecaoFases.png");
 
@@ -95,19 +99,20 @@ public class EscolherEtapa extends View implements Runnable {
 					(int) (2.3 * alt / 8));
 			Etapa2[i].set((int) ((3.5 * i + 1) * larg / 18),
 					(int) (4 * alt / 8),
-					(int) ((3.5 * i + 1) * larg / 18 + alturaideal[i+9]),
+					(int) ((3.5 * i + 1) * larg / 18 + alturaideal[i + 9]),
 					(int) (5.8 * alt / 8));
 
 		}
 		for (int p = 0; p < 4; p++) {
-			Etapa1[8-p].set((int) ((2.5  + p*3.5) * larg / 18),
+			Etapa1[8 - p].set((int) ((2.5 + p * 3.5) * larg / 18),
 					(int) (2.2 * alt / 8),
-					(int) ((2.5  + p*3.5) * larg / 18 + alturaideal[p + 5]),
+					(int) ((2.5 + p * 3.5) * larg / 18 + alturaideal[p + 5]),
 					(int) (4.0 * alt / 8));
-			Etapa2[8-p].set((int) ((2.5 +( p *3.5)) * larg / 18),
-					(int) (6 * alt / 8),
-					(int) ((2.5 + (p *3.5)) * larg / 18 + alturaideal[p + 14]),
-					(int) (7.8 * alt / 8));
+			Etapa2[8 - p]
+					.set((int) ((2.5 + (p * 3.5)) * larg / 18),
+							(int) (6 * alt / 8), (int) ((2.5 + (p * 3.5))
+									* larg / 18 + alturaideal[p + 14]),
+							(int) (7.8 * alt / 8));
 
 		}
 	}
@@ -124,10 +129,9 @@ public class EscolherEtapa extends View implements Runnable {
 		}
 		for (int i = 0; i < 4; i++) {
 
-			canvas.drawBitmap(etapa01[5+i], null,
-					Etapa1[i + 5], paint);
+			canvas.drawBitmap(etapa01[5 + i], null, Etapa1[i + 5], paint);
 
-			canvas.drawBitmap(etapa01[2*Etapa1.length-5+i], null,
+			canvas.drawBitmap(etapa01[2 * Etapa1.length - 5 + i], null,
 					Etapa2[i + 5], paint);
 
 		}
@@ -147,38 +151,30 @@ public class EscolherEtapa extends View implements Runnable {
 			int a = (int) event.getX();
 			int b = (int) event.getY();
 
-			for(int i =0;i<5;i++){
-				 if (Etapa1[i].contains(a, b)) {
-					 Log.i(MainActivity.TAG,
-						  "Escolheu a Etapa1!! ");
-					 SceneManager.Setup((Activity)super.getContext(), 1,i);
-					 
+			for (int i = 0; i < 5; i++) {
+				if (Etapa1[i].contains(a, b)) {
+					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
+					SceneManager.Setup((Activity) super.getContext(), 1, i);
 
-					 }
-				 if (Etapa2[i].contains(a, b)) {
-					 Log.i(MainActivity.TAG,
-						  "Escolheu a Etapa1!! ");
-					 SceneManager.Setup((Activity)super.getContext(), 2,i);
+				}
+				if (Etapa2[i].contains(a, b)) {
+					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
+					SceneManager.Setup((Activity) super.getContext(), 2, i);
 
-					 }
+				}
 			}
-			for(int i =0;i<4;i++){
-				 if (Etapa1[5+i].contains(a, b)) {
-					 Log.i(MainActivity.TAG,
-						  "Escolheu a Etapa1!! ");
-					 SceneManager.Setup((Activity)super.getContext(), 1,5+i);
+			for (int i = 0; i < 4; i++) {
+				if (Etapa1[5 + i].contains(a, b)) {
+					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
+					SceneManager.Setup((Activity) super.getContext(), 1, 5 + i);
 
-					 }
-				 if (Etapa2[5+i].contains(a, b)) {
-					 Log.i(MainActivity.TAG,
-						  "Escolheu a Etapa1!! ");
-					 SceneManager.Setup((Activity)super.getContext(), 2,5+i);
+				}
+				if (Etapa2[5 + i].contains(a, b)) {
+					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
+					SceneManager.Setup((Activity) super.getContext(), 2, 5 + i);
 
-					 }
+				}
 			}
-			 
-			  
-			 
 
 		}
 
@@ -186,7 +182,7 @@ public class EscolherEtapa extends View implements Runnable {
 	}
 
 	public void run() {
-		while (true) {
+		while (ativo) {
 			try {
 				Thread.sleep(1);
 			}
@@ -198,6 +194,12 @@ public class EscolherEtapa extends View implements Runnable {
 			postInvalidate();
 		}
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void killMeSoftly() {
+
+		ativo = false;
 	}
 
 }
