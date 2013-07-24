@@ -60,6 +60,13 @@ public class SoundManager {
 		}
 
 	}
+	public void PauseAllSongs() {
+		for (MediaPlayer currentAudio : songs.values()) {
+			currentAudio.stop();
+			songs.get(currentAudio).pause();
+		}
+
+	}
 
 	public void PauseSong(String name) {
 		try {
