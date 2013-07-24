@@ -37,8 +37,7 @@ public class SceneManager {
 
 
 			carregarSceneEtapa1(fase, game);
-		
-		
+
 
 		}
 		if (etapa == 2) {
@@ -149,8 +148,7 @@ public class SceneManager {
 	static public void ChangeScene(Context game) {
 
 		switch (SceneManager.currentScene) {
-
-
+		
 		case SCN_LEVEL_01:
 
 			carregar = new Fase2_Assets(game);
@@ -214,8 +212,6 @@ public class SceneManager {
 			SceneManager.scene.setFase(carregar);
 			SceneManager.currentScene = SCENE.SCN_LEVEL_01_ETAPA2;
 
-			
-
 			break;
 
 		case SCN_LEVEL_01_ETAPA2:
@@ -277,7 +273,7 @@ public class SceneManager {
 			break;
 		case SCN_LEVEL_09_ETAPA2:
 
-			carregar = new Fase9_Assets(game);
+			carregar = new Fase9_Assets_ETAPA2(game);
 			SceneManager.scene.setFase(carregar);
 			SceneManager.currentScene = SCENE.SCN_VITORIA;
 
@@ -285,6 +281,7 @@ public class SceneManager {
 			SoundManager.getInstance().playSound(R.raw.musicvitoria,
 					"VitoriaSound", false, game);
 			break;
+			
 		// case SCENE.SCN_GAMEOVER:
 		// SceneManager.scene = new Opening(game);
 		// SceneManager.currentScene = SCENE.SCN_OPENING;
