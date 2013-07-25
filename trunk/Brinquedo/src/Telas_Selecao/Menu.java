@@ -1,5 +1,6 @@
 package Telas_Selecao;
 
+import com.example.brinquedo1.CreditosActivity;
 import com.example.brinquedo1.EtapasActivity;
 import com.example.brinquedo1.Fase02;
 import com.example.brinquedo1.MainActivity;
@@ -37,7 +38,7 @@ public class Menu extends View implements Runnable, Killable {
 	Sprite spriteGirafa;
 	Sprite spritePlay;
 	Boolean setup = true;
-	private boolean ativo = true;
+	public boolean ativo = true;
 	Sprite spriteConfig;
 	public static long deltaTime;
 	public long lastTimeCount;
@@ -55,7 +56,7 @@ public class Menu extends View implements Runnable, Killable {
 	private Rect Config;
 	private Rect som;
 	public SoundManager sound = SoundManager.getInstance();	
-	public Menu(Context context, Thread processo) {
+	public Menu(Context context) {
 		super(context);
 
 		setFocusableInTouchMode(true);
@@ -85,13 +86,15 @@ public class Menu extends View implements Runnable, Killable {
 		areaOptions[1] = new Rect();
 		processo = new Thread(this);
 		processo.start();
-
-		SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
-				true, context);
 		
 		// TODO Auto-generated constructor stub
 	}
 
+	public void start(){
+
+		processo = new Thread(this);
+		processo.start();
+	}
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
@@ -189,9 +192,8 @@ public class Menu extends View implements Runnable, Killable {
 			{
 				Log.i(MainActivity.TAG, "Entrou no créditos !! ");
 	//			SoundManager.getInstance().StopSong("MusicMenu");
-				creditosScene = new Creditos(activity, processo);
-				activity.setContentView(creditosScene);
-				processo.stop();
+				Intent mod = new Intent((Context)activity,CreditosActivity.class);
+				activity.startActivity(mod);
 			}
 			
 			if (som.contains(a, b)) 
@@ -199,10 +201,13 @@ public class Menu extends View implements Runnable, Killable {
 				if (Fase02.tocarSom == true)
 				{
 					Fase02.tocarSom = false;
-					sound.StopAllSongs();					
+					sound.StopAllSongs();	
+					SceneManager.sound=false;
 				}
 				
 				else {
+					SceneManager.sound=true;
+
 					Fase02.tocarSom = true;
 					SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
 							true, super.getContext());
@@ -229,7 +234,6 @@ public class Menu extends View implements Runnable, Killable {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
 				Intent mod = new Intent((Context)activity,EtapasActivity.class);
 				activity.startActivity(mod);
-				processo.stop();
 
 			}else{
 				spritePlay.Modificar(1);

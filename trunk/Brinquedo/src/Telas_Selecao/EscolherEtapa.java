@@ -39,11 +39,11 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 	private Fase2_Assets asset;
 	private static int positionX;
 	private static int positionY;
-	private boolean ativo = true;
+	public boolean ativo = true;
 	int[] alturaideal = new int[18];
 	Thread processo;
 
-	public EscolherEtapa(Context context, Thread processo) {
+	public EscolherEtapa(Context context) {
 		super(context);
 
 		setFocusableInTouchMode(true);
@@ -74,7 +74,11 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 		processo.start();
 		// TODO Auto-generated constructor stub
 	}
+	public void start(){
 
+		processo = new Thread(this);
+		processo.start();
+	}
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
@@ -161,12 +165,10 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
 					SceneManager.Setup((Activity) super.getContext(), 1, i, processo);
 
-					processo.stop();
 				}
 				if (Etapa2[i].contains(a, b)) {
 					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
 					SceneManager.Setup((Activity) super.getContext(), 2, i,processo);
-					processo.stop();
 
 				}
 			}
@@ -174,7 +176,6 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 				if (Etapa1[5 + i].contains(a, b)) {
 					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
 					SceneManager.Setup((Activity) super.getContext(), 1, 5 + i,processo);
-					processo.stop();
 
 				}
 				if (Etapa2[5 + i].contains(a, b)) {

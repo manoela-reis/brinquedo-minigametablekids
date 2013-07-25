@@ -40,7 +40,7 @@ public class Creditos extends View implements Runnable, Killable
 	public SoundManager sound = SoundManager.getInstance();
 	public boolean ativo = true;
 	
-	public Creditos(Context context, Thread processo) 
+	public Creditos(Context context) 
 	{	
 		super(context);
 		
@@ -65,6 +65,11 @@ public class Creditos extends View implements Runnable, Killable
 		ElMatador.getInstance().add(this);
 
 		// TODO Auto-generated constructor stub
+	}
+	public void start(){
+
+		processo = new Thread(this);
+		processo.start();
 	}
 	
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) 
@@ -104,14 +109,8 @@ public class Creditos extends View implements Runnable, Killable
 			
 			if (rectCreditos1.contains(a,b))
 			{
-/*				SoundManager.getInstance().StopSong("MusicMenu");
-				SoundManager.getInstance().StopSong("MenuSound");
-				SoundManager.getInstance().StopSong("Game");
-				SoundManager.getInstance().StopSong("VitoriaSound");
-				SoundManager.getInstance().StopSong("sound");*/
 				sound.StopAllSongs();
-				menu = new Menu(activity,processo);
-				activity.setContentView(menu);
+				activity.finish();
 			}
 
 		}

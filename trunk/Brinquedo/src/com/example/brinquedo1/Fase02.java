@@ -26,7 +26,7 @@ public class Fase02 extends View implements Runnable, Killable {
 	private long time = 1;
 	Bitmap[] geometricFigures = new Bitmap[7];
 	Bitmap[] Backgrounds;
-	private boolean ativo = true;
+	public boolean ativo = true;
 	int period = 60;
 	int counter;
 	private Paint paint;
@@ -52,7 +52,7 @@ public class Fase02 extends View implements Runnable, Killable {
 	public long lastTimeCount;
 	Thread processo;
 
-	public Fase02(Context context, Scene asset, Thread processo) {
+	public Fase02(Context context, Scene asset) {
 		super(context);
 		this.context = context;
 		setFocusableInTouchMode(true);
@@ -87,6 +87,7 @@ public class Fase02 extends View implements Runnable, Killable {
 
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	public void setFase(Scene carreg) {
 
@@ -181,14 +182,14 @@ public class Fase02 extends View implements Runnable, Killable {
 								rects[i].setEmpty();
 								movendo = false;
 								mov = null;
-								if (tocarSom == true) {
+								if (SceneManager.sound) {
 									sound.playSound(R.raw.acerto, "MenuSound",
 											false, context);
 								}
 
 								hitPoints++;
 							} else {
-								if (tocarSom == true) {
+								if (SceneManager.sound) {
 									sound.playSound(R.raw.erro, "MenuSound",
 											false, context);
 								}
@@ -230,7 +231,7 @@ public class Fase02 extends View implements Runnable, Killable {
 			}
 
 			SceneManager.ChangeScene(context);
-			if (tocarSom == true) {
+			if (SceneManager.sound) {
 				SoundManager.getInstance().playSound(R.raw.acerto, "sound",
 						false, context);
 			}
@@ -242,6 +243,8 @@ public class Fase02 extends View implements Runnable, Killable {
 		this.lastTimeCount = System.currentTimeMillis();
 
 	}
+
+	
 
 	public void run() {
 		while (ativo) {
