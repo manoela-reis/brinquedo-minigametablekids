@@ -20,7 +20,7 @@ import android.view.WindowManager;
 
 public class EtapasActivity extends Activity implements Killable {
 	public static final String TAG = "quadros";
-
+	EscolherEtapa etapas;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -30,28 +30,36 @@ public class EtapasActivity extends Activity implements Killable {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		View etapas = new EscolherEtapa(this, SceneManager.processo);
+        if(etapas==null){
+		etapas = new EscolherEtapa(this);
+        }else{
+        	etapas.start();
+        }
 		setContentView(etapas);
 	}
 	
 	protected void onPause() {
-		SoundManager.getInstance().StopAllSongs();
-		// killMeSoftly();
+		SoundManager.getInstance().PauseSong("MusicMenu");
+		etapas.killMeSoftly();
+		 //killMeSoftly();
 		super.onPause();
 	}
 	
 	protected void onResume() {
-		SoundManager.getInstance().StopAllSongs();
+		//SoundManager.getInstance().StopAllSongs();
+		etapas.ativo=true;
+		if(SceneManager.sound){
 
 		SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
 				true, this);
+		}
 		super.onResume();
 	}
 	
 	protected void OnDestroy()
 	{
 		SoundManager.getInstance().StopAllSongs();
-		//killMeSoftly();
+		killMeSoftly();
 		super.onDestroy();
 	}
 	

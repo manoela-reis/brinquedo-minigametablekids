@@ -38,6 +38,7 @@ public class SceneManager {
 	public static Activity activity;
 
 	public static Thread processo;
+	public static Boolean sound=true;
 
 	static public void Setup(Activity game, int etapa, int fase, Thread processo) {
 		if (etapa == 1) {
@@ -294,8 +295,10 @@ public class SceneManager {
 
 			SoundManager.getInstance().StopSong("Game");
 
+			if(SceneManager.sound){
 			SoundManager.getInstance().playSound(R.raw.musicvitoria,
 					"VitoriaSound", false, game);
+			}
 			break;
 			
 		// case SCENE.SCN_GAMEOVER:
@@ -305,7 +308,7 @@ public class SceneManager {
 
 		default:
 			carregar = new Fase1_Assets(game);
-			SceneManager.scene = new Fase02(game, carregar, SceneManager.processo);
+			SceneManager.scene = new Fase02(game, carregar);
 			SceneManager.currentScene = SCENE.SCN_LEVEL_01;
 			break;
 		}
