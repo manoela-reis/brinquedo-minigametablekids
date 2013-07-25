@@ -50,6 +50,7 @@ public class Menu extends View implements Runnable, Killable {
 	private Bitmap creditos;
 	private Bitmap Som;
 
+	Boolean play=false;
 	private Rect Creditos;
 	private Rect Config;
 	private Rect som;
@@ -176,7 +177,14 @@ public class Menu extends View implements Runnable, Killable {
 				}
 
 			}
+			if (areaOptions[0].contains(a, b)) {
+				Log.i(MainActivity.TAG, "Entrou no Play !! ");
+				spritePlay.Modificar(0);
+				play=true;
+				
 			
+
+			}
 			if (Creditos.contains(a, b)) 
 			{
 				Log.i(MainActivity.TAG, "Entrou no créditos !! ");
@@ -205,6 +213,9 @@ public class Menu extends View implements Runnable, Killable {
 
 		if (event.getAction() == MotionEvent.ACTION_MOVE) {
 			Log.i(MainActivity.TAG, "Entrou no action move");
+			int a = (int) event.getX();
+			int b = (int) event.getY();
+		
 		}
 
 		if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -213,13 +224,17 @@ public class Menu extends View implements Runnable, Killable {
 			int b = (int) event.getY();
 
 			// Play
+			if(play){
 			if (areaOptions[0].contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
-				spritePlay.Modificar(0);
 				Intent mod = new Intent((Context)activity,EtapasActivity.class);
 				activity.startActivity(mod);
 				processo.stop();
 
+			}else{
+				spritePlay.Modificar(1);
+			}
+			play=false;
 			}
 
 		}
@@ -258,6 +273,9 @@ public class Menu extends View implements Runnable, Killable {
 			} else {
 				spriteConfig.Voltar(deltaTime);
 			}
+		}
+		if(!play){
+		spritePlay.Modificar(1);
 		}
 
 	}

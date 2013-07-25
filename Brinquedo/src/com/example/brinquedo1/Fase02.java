@@ -258,19 +258,7 @@ public class Fase02 extends View implements Runnable, Killable {
 		}
 		// TODO Auto-generated method stub
 	}
-	public void onBackPressed() {
 
-
-		
-		View menu = new EscolherEtapa(super.getContext(), processo);
-		Activity activity = (Activity)super.getContext();
-		activity.setContentView(menu);
-		processo.stop();
-		// killMeSoftly();
-	//	SoundManager.getInstance().StopAllSongs();
-		// finish();
-
-	}
 
 	public void killMeSoftly() {
 		ativo = false;

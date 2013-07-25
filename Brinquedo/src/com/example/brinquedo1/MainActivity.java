@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		Thread processo = new Thread();
 
 		SceneManager.processo=processo;
-
+		
 		Menu menu = new Menu(this, processo);
 		setContentView(menu);
 	}
