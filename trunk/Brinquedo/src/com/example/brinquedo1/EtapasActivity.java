@@ -33,20 +33,21 @@ public class EtapasActivity extends Activity implements Killable {
 		View etapas = new EscolherEtapa(this, SceneManager.processo);
 		setContentView(etapas);
 	}
-	protected void onPause() 
-    {
+	
+	protected void onPause() {
 		SoundManager.getInstance().StopAllSongs();
-		//killMeSoftly();
+		// killMeSoftly();
 		super.onPause();
-    }
-    protected void onResume()
-    {
+	}
+	
+	protected void onResume() {
 		SoundManager.getInstance().StopAllSongs();
 
 		SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
 				true, this);
-    	super.onResume();
-    }
+		super.onResume();
+	}
+	
 	protected void OnDestroy()
 	{
 		SoundManager.getInstance().StopAllSongs();
