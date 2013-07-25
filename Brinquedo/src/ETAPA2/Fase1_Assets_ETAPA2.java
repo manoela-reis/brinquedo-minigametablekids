@@ -148,9 +148,13 @@ Sprite sprite;
 		for (int i = 0; i < rect.length; i++) {
 
 			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
+		}
 
+		for (int i = 0; i < rect.length; i++) 
+		{
 			canvas.drawBitmap(geometricFigures[i + 3], null, rect[i], paint);
 		}
+		
 
 	}
 }

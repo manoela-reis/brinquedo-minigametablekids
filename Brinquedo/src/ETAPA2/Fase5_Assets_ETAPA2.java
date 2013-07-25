@@ -145,12 +145,16 @@ public class Fase5_Assets_ETAPA2 extends Scene{
 
 	public void Draw(Canvas canvas) {
 
-		for(int i=0;i<rect.length;i++){
+		for (int i = 0; i < rect.length; i++) {
 
 			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
-
-			canvas.drawBitmap(geometricFigures[i+3], null, rect[i], paint);
 		}
+
+		for (int i = 0; i < rect.length; i++) 
+		{
+			canvas.drawBitmap(geometricFigures[i + 3], null, rect[i], paint);
+		}
+		
 		
 
 	}

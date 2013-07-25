@@ -190,9 +190,13 @@ public class Fase7_Assets_ETAPA2 extends Scene {
 		for (int i = 0; i < rect.length; i++) {
 
 			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
+		}
 
+		for (int i = 0; i < rect.length; i++) 
+		{
 			canvas.drawBitmap(geometricFigures[i + 4], null, rect[i], paint);
 		}
+		
 
 	}
 }
