@@ -36,7 +36,7 @@ public class Fase9_Assets_ETAPA2 extends Scene {
 		geometricFigures[0] = img.ImageManager("fase 4.2 avestruz.png");
 		geometricFigures[1] = img.ImageManager("fase 2.2 javali.png");
 		geometricFigures[2] = img.ImageManager("fase 2.2 rino.png");
-		geometricFigures[3] = img.ImageManager("fase 6.2 tigre.png");
+		geometricFigures[3] = img.ImageManager("fase 3.2 leao.png");
 		geometricFigures[4] = img.ImageManager("fase 4.2 macaco.png");
 		geometricFigures[5] = img.ImageManager("avestruzCorEdit.png");
 		geometricFigures[6] = img.ImageManager("javaliCor-05.png");
