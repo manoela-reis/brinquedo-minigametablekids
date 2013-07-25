@@ -59,9 +59,9 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 
 		background = picture.ImageManager("cenario_SelecaoFases.png");
 
-		for (int i = 1; i <= etapa01.length; i++) {
+		for (int i = 1; i <= etapa01.length; i++)
+		{
 			etapa01[i - 1] = picture.ImageManager("bot_" + i + ".png");
-
 		}
 		for (int i = 0; i < Etapa2.length; i++) {
 
@@ -130,17 +130,23 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 		super.draw(canvas);
 
 		canvas.drawBitmap(background, null, recBackground, paint);
+		
+		// 0 a 5
+		// 9 a 14
 		for (int i = 0; i < 5; i++) {
 
 			canvas.drawBitmap(etapa01[i], null, Etapa1[i], paint);
 			canvas.drawBitmap(etapa01[9 + i], null, Etapa2[i], paint);
 
 		}
+		
+		// 6 a 9
+		//15 a 18
 		for (int i = 0; i < 4; i++) {
 
 			canvas.drawBitmap(etapa01[5 + i], null, Etapa1[i + 5], paint);
 
-			canvas.drawBitmap(etapa01[2 * Etapa1.length - 5 + i], null,
+			canvas.drawBitmap(etapa01[2 * Etapa1.length - 4 + i], null,
 					Etapa2[i + 5], paint);
 
 		}
