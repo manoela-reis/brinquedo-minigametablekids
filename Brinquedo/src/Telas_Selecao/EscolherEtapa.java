@@ -7,6 +7,7 @@ import Gerenciadores.ElMatador;
 import Gerenciadores.ImageManager;
 import Gerenciadores.Killable;
 import Gerenciadores.SceneManager;
+import Gerenciadores.SoundManager;
 import Gerenciadores.SceneManager.SCENE;
 import android.app.Activity;
 import android.content.Context;
@@ -40,8 +41,9 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 	private static int positionY;
 	private boolean ativo = true;
 	int[] alturaideal = new int[18];
+	Thread processo;
 
-	public EscolherEtapa(Context context) {
+	public EscolherEtapa(Context context, Thread processo) {
 		super(context);
 
 		setFocusableInTouchMode(true);
@@ -50,6 +52,7 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 		picture = new ImageManager(context);
 		paint = new Paint();
 
+		
 		activity = (Activity) context;
 		ElMatador.getInstance().add(this);
 
@@ -66,7 +69,9 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 			Etapa2[i] = new Rect();
 
 		}
-
+		this.processo=processo;
+		processo=new Thread(this);
+		processo.start();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -154,33 +159,38 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 			for (int i = 0; i < 5; i++) {
 				if (Etapa1[i].contains(a, b)) {
 					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
-					SceneManager.Setup((Activity) super.getContext(), 1, i);
+					SceneManager.Setup((Activity) super.getContext(), 1, i, processo);
 
+					processo.stop();
 				}
 				if (Etapa2[i].contains(a, b)) {
 					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
-					SceneManager.Setup((Activity) super.getContext(), 2, i);
+					SceneManager.Setup((Activity) super.getContext(), 2, i,processo);
+					processo.stop();
 
 				}
 			}
 			for (int i = 0; i < 4; i++) {
 				if (Etapa1[5 + i].contains(a, b)) {
 					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
-					SceneManager.Setup((Activity) super.getContext(), 1, 5 + i);
+					SceneManager.Setup((Activity) super.getContext(), 1, 5 + i,processo);
+					processo.stop();
 
 				}
 				if (Etapa2[5 + i].contains(a, b)) {
 					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
-					SceneManager.Setup((Activity) super.getContext(), 2, 5 + i);
+					SceneManager.Setup((Activity) super.getContext(), 2, 5 + i,processo);
+					processo.stop();
 
 				}
 			}
+			
 
 		}
 
 		return super.onTouchEvent(event);
 	}
-
+	
 	public void run() {
 		while (ativo) {
 			try {

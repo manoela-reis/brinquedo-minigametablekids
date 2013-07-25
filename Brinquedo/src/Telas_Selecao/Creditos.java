@@ -12,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.hardware.Camera.Area;
 import android.media.AudioManager;
 import Gerenciadores.SoundManager;
 import android.os.Bundle;
@@ -41,7 +40,7 @@ public class Creditos extends View implements Runnable, Killable
 	public SoundManager sound = SoundManager.getInstance();
 	public boolean ativo = true;
 	
-	public Creditos(Context context) 
+	public Creditos(Context context, Thread processo) 
 	{	
 		super(context);
 		
@@ -59,6 +58,7 @@ public class Creditos extends View implements Runnable, Killable
 		creditos1[1] = picture.ImageManager("creditos2.png");
 		
 		//Thread 
+		this.processo=processo;
 		processo = new Thread(this);
 		processo.start();
 			
@@ -110,7 +110,7 @@ public class Creditos extends View implements Runnable, Killable
 				SoundManager.getInstance().StopSong("VitoriaSound");
 				SoundManager.getInstance().StopSong("sound");*/
 				sound.StopAllSongs();
-				menu = new Menu(activity);
+				menu = new Menu(activity,processo);
 				activity.setContentView(menu);
 			}
 

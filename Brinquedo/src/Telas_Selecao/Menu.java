@@ -1,10 +1,10 @@
 package Telas_Selecao;
 
+import com.example.brinquedo1.EtapasActivity;
 import com.example.brinquedo1.Fase02;
 import com.example.brinquedo1.MainActivity;
 import com.example.brinquedo1.R;
 import com.example.brinquedo1.Sprite;
-
 import ETAPA1.Fase2_Assets;
 import Gerenciadores.ImageManager;
 import Gerenciadores.Killable;
@@ -13,6 +13,7 @@ import Gerenciadores.SoundManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources.Theme;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -30,7 +31,6 @@ public class Menu extends View implements Runnable, Killable {
 	private Rect[] areaOptions;
 	private ImageManager picture;
 	Paint paint;
-	private View etapas;
 	private View creditosScene;
 	Activity activity;
 	private Rect Back = new Rect();
@@ -54,8 +54,7 @@ public class Menu extends View implements Runnable, Killable {
 	private Rect Config;
 	private Rect som;
 	public SoundManager sound = SoundManager.getInstance();	
-	
-	public Menu(Context context) {
+	public Menu(Context context, Thread processo) {
 		super(context);
 
 		setFocusableInTouchMode(true);
@@ -63,7 +62,7 @@ public class Menu extends View implements Runnable, Killable {
 		setLongClickable(true);
 		picture = new ImageManager(context);
 		paint = new Paint();
-		
+		this.processo=processo;
 		activity = (Activity) context;
 		options = new Bitmap[3];
 		areaOptions = new Rect[3];
@@ -84,7 +83,6 @@ public class Menu extends View implements Runnable, Killable {
 		this.spritePlay.Modificar(1);
 		areaOptions[1] = new Rect();
 		processo = new Thread(this);
-		
 		processo.start();
 
 		SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
@@ -183,8 +181,9 @@ public class Menu extends View implements Runnable, Killable {
 			{
 				Log.i(MainActivity.TAG, "Entrou no créditos !! ");
 	//			SoundManager.getInstance().StopSong("MusicMenu");
-				creditosScene = new Creditos(activity);
+				creditosScene = new Creditos(activity, processo);
 				activity.setContentView(creditosScene);
+				processo.stop();
 			}
 			
 			if (som.contains(a, b)) 
@@ -217,8 +216,8 @@ public class Menu extends View implements Runnable, Killable {
 			if (areaOptions[0].contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
 				spritePlay.Modificar(0);
-				etapas = new EscolherEtapa(super.getContext());
-				activity.setContentView(etapas);
+				Intent mod = new Intent((Context)activity,EtapasActivity.class);
+				activity.startActivity(mod);
 				processo.stop();
 
 			}
@@ -267,7 +266,7 @@ public class Menu extends View implements Runnable, Killable {
 	public void killMeSoftly() {
 
 		ativo = false;
-		System.exit(0);
+		
 	}
 
 }
