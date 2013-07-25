@@ -157,18 +157,21 @@ public class Menu extends View implements Runnable, Killable {
 		this.spriteGirafa.Draw(canvas, areaOptions[1]);
 		this.spritePlay.Draw(canvas, areaOptions[0]);
 		this.spriteConfig.Draw(canvas, areaOptions[2]);
+
 		if (!setup && !spriteConfig.status) {
 			canvas.drawBitmap(creditos, null, Creditos, paint);
 
 			canvas.drawBitmap(Som, null, som, paint);
+			
+			if (boolSomOff == true)
+			{
+				canvas.drawBitmap(SomOff, null, som, paint);
+				
+			}
 
 		}
 		
-		if (boolSomOff == true)
-		{
-			canvas.drawBitmap(SomOff, null, som, paint);
-			
-		}
+
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -179,15 +182,28 @@ public class Menu extends View implements Runnable, Killable {
 
 			if (Config.contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
-				if (!spriteConfig.status && setup) {
+				//Subindo
+				if (!spriteConfig.status && setup) 
+				{
 					setup = false;
 					spriteConfig.status = true;
-
+					
+					if (Fase02.tocarSom == true)
+					{
+						boolSomOff = false;	
+					}
+					
+					else
+					{
+						boolSomOff = true;
+					}
 				}
+				
+				// Descendo
 				if (!setup && !spriteConfig.status) {
 					spriteConfig.status = true;
 					setup = true;
-
+					boolSomOff = false;
 				}
 
 			}
