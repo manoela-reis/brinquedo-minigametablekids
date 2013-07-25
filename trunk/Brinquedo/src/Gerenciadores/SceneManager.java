@@ -1,8 +1,11 @@
 package Gerenciadores;
 
+import com.example.brinquedo1.EtapasActivity;
 import com.example.brinquedo1.Fase02;
+import com.example.brinquedo1.GameActivity;
 import com.example.brinquedo1.R;
 import com.example.brinquedo1.Scene;
+import com.example.brinquedo1.Vitoria;
 
 import ETAPA1.Fase1_Assets;
 import ETAPA1.Fase2_Assets;
@@ -24,15 +27,19 @@ import ETAPA2.Fase8_Assets_ETAPA2;
 import ETAPA2.Fase9_Assets_ETAPA2;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 
 public class SceneManager {
 	static private SCENE currentScene;
 	static public Fase02 scene = null;
-	static Scene carregar;
+	public static Scene carregar;
 
 	public static Activity activity;
 
-	static public void Setup(Activity game, int etapa, int fase) {
+	public static Thread processo;
+
+	static public void Setup(Activity game, int etapa, int fase, Thread processo) {
 		if (etapa == 1) {
 
 
@@ -43,8 +50,14 @@ public class SceneManager {
 		if (etapa == 2) {
 			carregarSceneEtapa2(fase,game);
 		}
-		SceneManager.scene = new Fase02(game, carregar);
-		game.setContentView(scene);
+
+
+		Intent mod = new Intent((Context)game,GameActivity.class);
+		game.startActivity(mod);
+	
+		SceneManager.processo=processo;
+		
+		
 		activity = game;
 	}
 
@@ -273,11 +286,14 @@ public class SceneManager {
 			break;
 		case SCN_LEVEL_09_ETAPA2:
 
-			carregar = new Fase9_Assets_ETAPA2(game);
+			carregar = new Vitoria(game);
+
+			SceneManager.scene.Vitoria=true;
 			SceneManager.scene.setFase(carregar);
 			SceneManager.currentScene = SCENE.SCN_VITORIA;
 
 			SoundManager.getInstance().StopSong("Game");
+
 			SoundManager.getInstance().playSound(R.raw.musicvitoria,
 					"VitoriaSound", false, game);
 			break;
@@ -289,7 +305,7 @@ public class SceneManager {
 
 		default:
 			carregar = new Fase1_Assets(game);
-			SceneManager.scene = new Fase02(game, carregar);
+			SceneManager.scene = new Fase02(game, carregar, SceneManager.processo);
 			SceneManager.currentScene = SCENE.SCN_LEVEL_01;
 			break;
 		}

@@ -8,6 +8,9 @@ import Gerenciadores.Killable;
 import Gerenciadores.SceneManager;
 import Gerenciadores.SoundManager;
 import Gerenciadores.SceneManager.SCENE;
+import Telas_Selecao.EscolherEtapa;
+import Telas_Selecao.Menu;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -40,27 +43,27 @@ public class Fase02 extends View implements Runnable, Killable {
 	Boolean movendo;
 	Rect mov;
 	public static boolean tocarSom = true;
+	public Boolean Vitoria = false;
 
 	public SoundManager sound = SoundManager.getInstance();
 	Context context;
 	Rect[] rectsColor;
 	public static long deltaTime;
 	public long lastTimeCount;
+	Thread processo;
 
-
-	public Fase02(Context context, Scene asset) {
+	public Fase02(Context context, Scene asset, Thread processo) {
 		super(context);
 		this.context = context;
 		setFocusableInTouchMode(true);
 		setClickable(true);
 		setLongClickable(true);
 
-		
+		this.processo = processo;
 		ElMatador.getInstance().add(this);
 		sound.StopAllSongs();
-		
-		if (tocarSom == true)
-		{
+
+		if (tocarSom == true) {
 			sound.playSound(R.raw.musicgame, "Game", true, context);
 		}
 		Backgrounds = new Bitmap[3];
@@ -79,124 +82,131 @@ public class Fase02 extends View implements Runnable, Killable {
 		Backgrounds[1] = img.ImageManager("bgGameOver.bmp");
 		Backgrounds[2] = img.ImageManager("fundo.png");
 
-		Thread processo = new Thread(this);
+		processo = new Thread(this);
 		processo.start();
 
 		// TODO Auto-generated constructor stub
 	}
 
 	public void setFase(Scene carreg) {
+
 		this.asset = carreg;
-		geometricFigures = asset.figuras();
-		rects = asset.getRect();
-		rectsColor = asset.getRectColor();
 		asset.setconfig(getWidth(), getHeight(), paint);
 
-		totalPoints = rectsColor.length;
+		if (!Vitoria) {
+			geometricFigures = asset.figuras();
+			rects = asset.getRect();
+			rectsColor = asset.getRectColor();
+			asset.setconfig(getWidth(), getHeight(), paint);
+
+			totalPoints = rectsColor.length;
+		}
 	}
 
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		asset.setconfig(getWidth(), getHeight(), paint);
 		positionX = (int) getWidth() / 2;
 		positionY = (int) getHeight() / 2;
-		asset.setXY(positionX, positionY);
+		if (!Vitoria) {
+			asset.setXY(positionX, positionY);
+			asset.setconfig(getWidth(), getHeight(), paint);
+		}
 		Back.set(0, 0, getWidth(), getHeight());
 	}
 
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 
-	
+		if (!Vitoria) {
 			canvas.drawBitmap(Backgrounds[2], null, Back, paint);
+		}
 
-			asset.Draw(canvas);
-		
+		asset.Draw(canvas);
 
 		// Condição de derrota.
-	
+
 		// Condição de vitória.
-		
 
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			Log.i(MainActivity.TAG, "down baby down !! ");
-			int c = (int) event.getX();
-			int d = (int) event.getY();
+		if (!Vitoria) {
+			if (event.getAction() == MotionEvent.ACTION_DOWN) {
+				Log.i(MainActivity.TAG, "down baby down !! ");
+				int c = (int) event.getX();
+				int d = (int) event.getY();
 
-			for (Rect a : rects) {
-				if (a.contains(c, d)) {
-					movendo = true;
-					mov = a;
+				for (Rect a : rects) {
+					if (a.contains(c, d)) {
+						movendo = true;
+						mov = a;
+					}
 				}
 			}
-		}
 
-		if (event.getAction() == MotionEvent.ACTION_MOVE) {
+			if (event.getAction() == MotionEvent.ACTION_MOVE) {
 
-			Log.i(MainActivity.TAG, "SHAKE !!!");
-			int c = (int) event.getX();
-			int d = (int) event.getY();
+				Log.i(MainActivity.TAG, "SHAKE !!!");
+				int c = (int) event.getX();
+				int d = (int) event.getY();
 
-			// Testes de Colisão da imagem preto e branco de acordo com a
-			// sua respectiva imagem colorida.
+				// Testes de Colisão da imagem preto e branco de acordo com a
+				// sua respectiva imagem colorida.
 
-			if (mov != null) {
-				if (movendo) {
-					positionX = (int) event.getX();
-					positionY = (int) event.getY();
-
-					asset.setXY(positionX, positionY);
-
-					asset.setRect(mov);
-				}
-
-			}
-		}
-
-		if (event.getAction() == MotionEvent.ACTION_UP) {
-
-			movendo = false;
-
-			for (int i = 0; i < rectsColor.length; i++) {
 				if (mov != null) {
-					if (mov.contains((int) rectsColor[i].exactCenterX(),
-							(int) rectsColor[i].exactCenterY())) {
+					if (movendo) {
+						positionX = (int) event.getX();
+						positionY = (int) event.getY();
 
-						if (rects[i] == mov) {
-							asset.colidiu(mov, rectsColor[i], i);
-							rects[i].setEmpty();
-							movendo = false;
-							mov = null;
-							if (tocarSom == true)
-							{
-							sound.playSound(R.raw.acerto, "MenuSound", false,
-									context);
-							}
+						asset.setXY(positionX, positionY);
 
-							hitPoints++;
-						} else {
-							if (tocarSom == true)
-							{
-							sound.playSound(R.raw.erro, "MenuSound", false,
-									context);
+						asset.setRect(mov);
+					}
+
+				}
+			}
+
+			if (event.getAction() == MotionEvent.ACTION_UP) {
+
+				movendo = false;
+
+				for (int i = 0; i < rectsColor.length; i++) {
+					if (mov != null) {
+						if (mov.contains((int) rectsColor[i].exactCenterX(),
+								(int) rectsColor[i].exactCenterY())) {
+
+							if (rects[i] == mov) {
+								asset.colidiu(mov, rectsColor[i], i);
+								rects[i].setEmpty();
+								movendo = false;
+								mov = null;
+								if (tocarSom == true) {
+									sound.playSound(R.raw.acerto, "MenuSound",
+											false, context);
+								}
+
+								hitPoints++;
+							} else {
+								if (tocarSom == true) {
+									sound.playSound(R.raw.erro, "MenuSound",
+											false, context);
+								}
 							}
 						}
 					}
 				}
-			}
-			if (mov != null) {
+				if (mov != null) {
 
-				asset.setRectInicial(mov);
+					asset.setRectInicial(mov);
+
+				}
 
 			}
 
 		}
-
-		return super.onTouchEvent(event);
+			return super.onTouchEvent(event);
+		
 	}
 
 	public void update() {
@@ -218,21 +228,19 @@ public class Fase02 extends View implements Runnable, Killable {
 			catch (Exception e) {
 				Log.e("Deu erro", "Quem sabe mete o pe");
 			}
-			
+
 			SceneManager.ChangeScene(context);
-			if (tocarSom == true)
-			{
-			SoundManager.getInstance().playSound(R.raw.acerto, "sound", false,
-					context);
+			if (tocarSom == true) {
+				SoundManager.getInstance().playSound(R.raw.acerto, "sound",
+						false, context);
 			}
+
 			hitPoints = 0;
 		}
 
 		this.deltaTime = System.currentTimeMillis() - this.lastTimeCount;
 		this.lastTimeCount = System.currentTimeMillis();
 
-		
-			
 	}
 
 	public void run() {
@@ -250,8 +258,21 @@ public class Fase02 extends View implements Runnable, Killable {
 		}
 		// TODO Auto-generated method stub
 	}
-	public void killMeSoftly()
-	{
+	public void onBackPressed() {
+
+
+		
+		View menu = new EscolherEtapa(super.getContext(), processo);
+		Activity activity = (Activity)super.getContext();
+		activity.setContentView(menu);
+		processo.stop();
+		// killMeSoftly();
+	//	SoundManager.getInstance().StopAllSongs();
+		// finish();
+
+	}
+
+	public void killMeSoftly() {
 		ativo = false;
 
 	}
