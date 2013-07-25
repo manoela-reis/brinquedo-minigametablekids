@@ -171,11 +171,14 @@ HeightBitmap[3]= geometricFigures[3].getHeight()*((int) (40 * this.larg / 50)-(i
 
 	public void Draw(Canvas canvas) {
 
-		for(int i=0;i<rect.length;i++){
+		for (int i = 0; i < rect.length; i++) {
 
 			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
+		}
 
-			canvas.drawBitmap(geometricFigures[i+5], null, rect[i], paint);
+		for (int i = 0; i < rect.length; i++) 
+		{
+			canvas.drawBitmap(geometricFigures[i + 5], null, rect[i], paint);
 		}
 		
 
