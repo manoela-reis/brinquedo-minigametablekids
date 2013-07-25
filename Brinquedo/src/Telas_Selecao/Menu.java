@@ -50,12 +50,16 @@ public class Menu extends View implements Runnable, Killable {
 	Thread processo;
 	private Bitmap creditos;
 	private Bitmap Som;
-
+	private Bitmap SomOff;
+	
 	Boolean play=false;
 	private Rect Creditos;
 	private Rect Config;
 	private Rect som;
 	public SoundManager sound = SoundManager.getInstance();	
+	private boolean boolSomOff = false;
+
+	
 	public Menu(Context context) {
 		super(context);
 
@@ -77,6 +81,7 @@ public class Menu extends View implements Runnable, Killable {
 		Setup = picture.ImageManager("Setup.png");
 		Som = picture.ImageManager("Som.png");
 		creditos = picture.ImageManager("Creditos.png");
+		SomOff = picture.ImageManager("SomOff.png");
 
 		spriteGirafa = new Sprite(zebra, 60, 10);
 		spritePlay = new Sprite(options[0], 2, 1);
@@ -158,6 +163,12 @@ public class Menu extends View implements Runnable, Killable {
 			canvas.drawBitmap(Som, null, som, paint);
 
 		}
+		
+		if (boolSomOff == true)
+		{
+			canvas.drawBitmap(SomOff, null, som, paint);
+			
+		}
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -203,6 +214,7 @@ public class Menu extends View implements Runnable, Killable {
 					Fase02.tocarSom = false;
 					sound.StopAllSongs();	
 					SceneManager.sound=false;
+					boolSomOff = true;
 				}
 				
 				else {
@@ -211,6 +223,7 @@ public class Menu extends View implements Runnable, Killable {
 					Fase02.tocarSom = true;
 					SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
 							true, super.getContext());
+					boolSomOff = false;
 				}
 				
 			}
