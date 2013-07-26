@@ -43,7 +43,7 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 	int[] alturaideal = new int[18];
 	Thread processo;
 
-	public EscolherEtapa(Context context) {
+	public EscolherEtapa(Context context, Thread processo) {
 		super(context);
 
 		setFocusableInTouchMode(true);
@@ -84,6 +84,7 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 
 		recBackground.set(0, 0, getWidth(), getHeight());
 		setConfig(getWidth(), getHeight(), paint);
+		SceneManager.Config( getHeight(),getWidth());
 
 	}
 

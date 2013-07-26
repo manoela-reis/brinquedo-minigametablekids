@@ -11,7 +11,7 @@ public class SoundManager {
 	private String TAG = "Sound Manager";
 
 	// private AudioManager audioManager;
-	private HashMap<String, MediaPlayer> songs;
+	private static HashMap<String, MediaPlayer> songs;
 	private static SoundManager instance;
 
 	private SoundManager() {
@@ -30,12 +30,14 @@ public class SoundManager {
 	public void playSound(final int source, String name, boolean isLooping,
 			Context context) {
 
-			final MediaPlayer mp = MediaPlayer.create(context, source);
+		final MediaPlayer mp = MediaPlayer.create(context, source);
+
 
 			try {
+				
 				mp.setLooping(isLooping);
 				mp.start();
-				this.songs.put(name, mp);
+				songs.put(name, mp);
 			} catch (Exception e) {
 				mp.stop();
 				Log.i(TAG, "Erro no som");

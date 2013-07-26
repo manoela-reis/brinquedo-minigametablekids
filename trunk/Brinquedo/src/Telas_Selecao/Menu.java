@@ -42,7 +42,7 @@ public class Menu extends View implements Runnable, Killable {
 	Sprite spriteConfig;
 	public static long deltaTime;
 	public long lastTimeCount;
-
+	private Bitmap SomOff;
 	private long time = 1;
 	int WidthBitmap;
 	Bitmap zebra;
@@ -50,17 +50,14 @@ public class Menu extends View implements Runnable, Killable {
 	Thread processo;
 	private Bitmap creditos;
 	private Bitmap Som;
-	private Bitmap SomOff;
-	
-	Boolean play=false;
+
+	Boolean play = false;
 	private Rect Creditos;
 	private Rect Config;
 	private Rect som;
-	public SoundManager sound = SoundManager.getInstance();	
-	private boolean boolSomOff = false;
+	public SoundManager sound = SoundManager.getInstance();
 
-	
-	public Menu(Context context) {
+	public Menu(Context context, Thread processo) {
 		super(context);
 
 		setFocusableInTouchMode(true);
@@ -68,7 +65,7 @@ public class Menu extends View implements Runnable, Killable {
 		setLongClickable(true);
 		picture = new ImageManager(context);
 		paint = new Paint();
-		this.processo=processo;
+		this.processo = processo;
 		activity = (Activity) context;
 		options = new Bitmap[3];
 		areaOptions = new Rect[3];
@@ -81,6 +78,7 @@ public class Menu extends View implements Runnable, Killable {
 		Setup = picture.ImageManager("Setup.png");
 		Som = picture.ImageManager("Som.png");
 		creditos = picture.ImageManager("Creditos.png");
+
 		SomOff = picture.ImageManager("SomOff.png");
 
 		spriteGirafa = new Sprite(zebra, 60, 10);
@@ -91,15 +89,22 @@ public class Menu extends View implements Runnable, Killable {
 		areaOptions[1] = new Rect();
 		processo = new Thread(this);
 		processo.start();
-		
+		SoundManager.getInstance().StopAllSongs();
+		if (SceneManager.sound) {
+			SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
+					true, context);
+
+		}
+
 		// TODO Auto-generated constructor stub
 	}
 
-	public void start(){
+	public void start() {
 
 		processo = new Thread(this);
 		processo.start();
 	}
+
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
@@ -160,18 +165,15 @@ public class Menu extends View implements Runnable, Killable {
 
 		if (!setup && !spriteConfig.status) {
 			canvas.drawBitmap(creditos, null, Creditos, paint);
-
 			canvas.drawBitmap(Som, null, som, paint);
-			
-			if (boolSomOff == true)
-			{
+			if (SceneManager.sound == false) {
 				canvas.drawBitmap(SomOff, null, som, paint);
+
 				
-			}
+
+			} 
 
 		}
-		
-
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -188,68 +190,59 @@ public class Menu extends View implements Runnable, Killable {
 					setup = false;
 					spriteConfig.status = true;
 					
-					if (Fase02.tocarSom == true)
-					{
-						boolSomOff = false;	
-					}
 					
-					else
-					{
-						boolSomOff = true;
-					}
 				}
 				
 				// Descendo
 				if (!setup && !spriteConfig.status) {
 					spriteConfig.status = true;
 					setup = true;
-					boolSomOff = false;
 				}
 
 			}
 			if (areaOptions[0].contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
 				spritePlay.Modificar(0);
-				play=true;
-				
-			
+				play = true;
 
 			}
-			if (Creditos.contains(a, b)) 
-			{
+			if (Creditos.contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no créditos !! ");
-	//			SoundManager.getInstance().StopSong("MusicMenu");
-				Intent mod = new Intent((Context)activity,CreditosActivity.class);
-				activity.startActivity(mod);
-			}
-			
-			if (som.contains(a, b)) 
-			{
-				if (Fase02.tocarSom == true)
-				{
-					Fase02.tocarSom = false;
-					sound.StopAllSongs();	
-					SceneManager.sound=false;
-					boolSomOff = true;
-				}
-				
-				else {
-					SceneManager.sound=true;
 
-					Fase02.tocarSom = true;
-					SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
-							true, super.getContext());
-					boolSomOff = false;
-				}
+				// SoundManager.getInstance().StopSong("MusicMenu");
+				Intent mod = new Intent((Context) activity,
+						CreditosActivity.class);
+				activity.startActivity(mod);
 				
+
+
+			}
+
+
+			if (som.contains(a, b)) {
+				if (SceneManager.sound == true) {
+					sound.StopAllSongs();
+					SceneManager.sound = false;
+			
+			
+				}
+
+				else {
+
+					SceneManager.sound = true;
+					SoundManager.getInstance().playSound(R.raw.musicmenu,
+							"MusicMenu", true, super.getContext());
+
+					
+
+				}
 			}
 		}
 
 		if (event.getAction() == MotionEvent.ACTION_MOVE) {
 			Log.i(MainActivity.TAG, "Entrou no action move");
-			int a = (int) event.getX();
-			int b = (int) event.getY();
-		
+			
+
 		}
 
 		if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -257,17 +250,22 @@ public class Menu extends View implements Runnable, Killable {
 			int a = (int) event.getX();
 			int b = (int) event.getY();
 
-			// Play
-			if(play){
+		
+			if (play){
 			if (areaOptions[0].contains(a, b)) {
 				Log.i(MainActivity.TAG, "Entrou no Play !! ");
+
+				spriteConfig.status = true;
+				setup = true;
+
 				Intent mod = new Intent((Context)activity,EtapasActivity.class);
 				activity.startActivity(mod);
 
-			}else{
-				spritePlay.Modificar(1);
-			}
-			play=false;
+
+				} else {
+					spritePlay.Modificar(1);
+				}
+				play = false;
 			}
 
 		}
@@ -307,8 +305,8 @@ public class Menu extends View implements Runnable, Killable {
 				spriteConfig.Voltar(deltaTime);
 			}
 		}
-		if(!play){
-		spritePlay.Modificar(1);
+		if (!play) {
+			spritePlay.Modificar(1);
 		}
 
 	}
@@ -317,7 +315,7 @@ public class Menu extends View implements Runnable, Killable {
 	public void killMeSoftly() {
 
 		ativo = false;
-		
+
 	}
 
 }

@@ -38,122 +38,148 @@ public class SceneManager {
 	public static Activity activity;
 
 	public static Thread processo;
-	public static Boolean sound=true;
+
+	static int Alt;
+	static int Larg;
+	public static Boolean sound = true;
+	public static Boolean Vitoria = true;
 
 	static public void Setup(Activity game, int etapa, int fase, Thread processo) {
 		if (etapa == 1) {
 
-
 			carregarSceneEtapa1(fase, game);
-
 
 		}
 		if (etapa == 2) {
-			carregarSceneEtapa2(fase,game);
+			carregarSceneEtapa2(fase, game);
 		}
 
-
-		Intent mod = new Intent((Context)game,GameActivity.class);
+		Intent mod = new Intent((Context) game, GameActivity.class);
 		game.startActivity(mod);
-	
-		SceneManager.processo=processo;
-		
-		
+
+		Vitoria = false;
+		SceneManager.processo = processo;
+
 		activity = game;
 	}
 
-	static private void carregarSceneEtapa1(int fase,Activity game) {
+	public static void Config(int alt, int larg) {
+
+		SceneManager.Alt = alt;
+		SceneManager.Larg = larg;
+	}
+
+	static private void carregarSceneEtapa1(int fase, Activity game) {
 
 		if (fase + 1 == 1) {
 			carregar = new Fase1_Assets(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_01;
 		}
 		if (fase + 1 == 2) {
 			carregar = new Fase2_Assets(game);
 
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
+
 			SceneManager.currentScene = SCENE.SCN_LEVEL_02;
 		}
 		if (fase + 1 == 3) {
 			carregar = new Fase3_Assets(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_03;
 		}
 		if (fase + 1 == 4) {
 			carregar = new Fase4_Assets(game);
 
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 			SceneManager.currentScene = SCENE.SCN_LEVEL_04;
 		}
 		if (fase + 1 == 5) {
 			carregar = new Fase5_Assets(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_05;
 		}
 		if (fase + 1 == 6) {
 			carregar = new Fase6_Assets(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_06;
 		}
 		if (fase + 1 == 7) {
 			carregar = new Fase7_Assets(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_07;
 		}
 		if (fase + 1 == 8) {
 			carregar = new Fase8_Assets(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_08;
 		}
 		if (fase + 1 == 9) {
 			carregar = new Fase9_Assets(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_09;
 		}
 	}
 
-	static private void carregarSceneEtapa2(int fase,Activity game) {
+	static private void carregarSceneEtapa2(int fase, Activity game) {
 		if (fase + 1 == 1) {
 			carregar = new Fase1_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_01_ETAPA2;
 		}
 		if (fase + 1 == 2) {
 			carregar = new Fase2_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_02_ETAPA2;
 		}
 		if (fase + 1 == 3) {
 			carregar = new Fase3_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_03_ETAPA2;
 		}
 		if (fase + 1 == 4) {
 			carregar = new Fase4_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_04_ETAPA2;
 		}
 		if (fase + 1 == 5) {
 			carregar = new Fase5_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_05_ETAPA2;
 		}
 		if (fase + 1 == 6) {
 			carregar = new Fase6_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_06_ETAPA2;
 		}
 		if (fase + 1 == 7) {
 			carregar = new Fase7_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_07_ETAPA2;
 		}
 		if (fase + 1 == 8) {
 			carregar = new Fase8_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_08_ETAPA2;
 		}
 		if (fase + 1 == 9) {
 			carregar = new Fase9_Assets_ETAPA2(game);
+			carregar.setconf(SceneManager.Larg, SceneManager.Alt);
 
 			SceneManager.currentScene = SCENE.SCN_LEVEL_09_ETAPA2;
 		}
@@ -162,7 +188,7 @@ public class SceneManager {
 	static public void ChangeScene(Context game) {
 
 		switch (SceneManager.currentScene) {
-		
+
 		case SCN_LEVEL_01:
 
 			carregar = new Fase2_Assets(game);
@@ -289,18 +315,18 @@ public class SceneManager {
 
 			carregar = new Vitoria(game);
 
-			SceneManager.scene.Vitoria=true;
+			SceneManager.scene.Vitoria = true;
+			Vitoria = true;
 			SceneManager.scene.setFase(carregar);
 			SceneManager.currentScene = SCENE.SCN_VITORIA;
 
-			SoundManager.getInstance().StopSong("Game");
+			SoundManager.getInstance().StopAllSongs();
 
-			if(SceneManager.sound){
-			SoundManager.getInstance().playSound(R.raw.musicvitoria,
-					"VitoriaSound", false, game);
+			if (SceneManager.sound) {
+				SoundManager.getInstance().playSound(R.raw.musicvitoria, "VitoriaSound",
+						false, game);
 			}
 			break;
-			
 		// case SCENE.SCN_GAMEOVER:
 		// SceneManager.scene = new Opening(game);
 		// SceneManager.currentScene = SCENE.SCN_OPENING;
@@ -308,7 +334,10 @@ public class SceneManager {
 
 		default:
 			carregar = new Fase1_Assets(game);
-			SceneManager.scene = new Fase02(game, carregar);
+
+			SceneManager.scene = new Fase02(game, carregar,
+					SceneManager.processo);
+
 			SceneManager.currentScene = SCENE.SCN_LEVEL_01;
 			break;
 		}
