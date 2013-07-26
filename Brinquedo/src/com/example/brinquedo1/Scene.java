@@ -14,6 +14,7 @@ public abstract class Scene {
 	Rect[] rect = new Rect[3];
 
 	Rect[] rectColor = new Rect[3];
+	int points;
 
 	public Bitmap[] figuras() {
 		return geometricFigures;
@@ -25,10 +26,17 @@ public abstract class Scene {
 
 	public void setconfig(int larg, int Alt, Paint paint) {
 	}
+	public void setconf(int larg, int Alt) {
+	}
+	
+	public int getPoint() {
+		return points;
+	}
 
 	public void setXY(int x, int y) {
 	}
-
+	public void update(long deltaTime) {
+	}
 	public Rect[] getRect() {
 		return rect;
 	}

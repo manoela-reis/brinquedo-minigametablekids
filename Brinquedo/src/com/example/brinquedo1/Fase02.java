@@ -42,7 +42,6 @@ public class Fase02 extends View implements Runnable, Killable {
 	Rect[] rects;
 	Boolean movendo;
 	Rect mov;
-	public static boolean tocarSom = true;
 	public Boolean Vitoria = false;
 
 	public SoundManager sound = SoundManager.getInstance();
@@ -52,7 +51,7 @@ public class Fase02 extends View implements Runnable, Killable {
 	public long lastTimeCount;
 	Thread processo;
 
-	public Fase02(Context context, Scene asset) {
+	public Fase02(Context context, Scene asset, Thread processo) {
 		super(context);
 		this.context = context;
 		setFocusableInTouchMode(true);
@@ -63,9 +62,17 @@ public class Fase02 extends View implements Runnable, Killable {
 		ElMatador.getInstance().add(this);
 		sound.StopAllSongs();
 
-		if (tocarSom == true) {
-			sound.playSound(R.raw.musicgame, "Game", true, context);
-		}
+		Vitoria=SceneManager.Vitoria;
+		if (SceneManager.sound == true) {
+			if(!Vitoria){
+				sound.playSound(R.raw.musicgame, "Game",
+						true, context);
+				}else{
+					sound.playSound(R.raw.musicvitoria,
+							"VitoriaSound", false, context);
+				}		
+			}
+		hitPoints=asset.getPoint();
 		Backgrounds = new Bitmap[3];
 		img = new ImageManager(context);
 		paint = new Paint();
@@ -73,6 +80,7 @@ public class Fase02 extends View implements Runnable, Killable {
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(20);
 
+		
 		this.asset = asset;
 		geometricFigures = asset.figuras();
 		rects = asset.getRect();
@@ -87,7 +95,6 @@ public class Fase02 extends View implements Runnable, Killable {
 
 		// TODO Auto-generated constructor stub
 	}
-	
 
 	public void setFase(Scene carreg) {
 
@@ -98,12 +105,13 @@ public class Fase02 extends View implements Runnable, Killable {
 			geometricFigures = asset.figuras();
 			rects = asset.getRect();
 			rectsColor = asset.getRectColor();
-			asset.setconfig(getWidth(), getHeight(), paint);
+			asset.setconf(getWidth(), getHeight());
 
 			totalPoints = rectsColor.length;
 		}
 	}
-
+	
+	
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
@@ -179,17 +187,17 @@ public class Fase02 extends View implements Runnable, Killable {
 
 							if (rects[i] == mov) {
 								asset.colidiu(mov, rectsColor[i], i);
-								rects[i].setEmpty();
+								//rects[i].setEmpty();
 								movendo = false;
 								mov = null;
-								if (SceneManager.sound) {
+								if (SceneManager.sound == true) {
 									sound.playSound(R.raw.acerto, "MenuSound",
 											false, context);
 								}
 
 								hitPoints++;
 							} else {
-								if (SceneManager.sound) {
+								if (SceneManager.sound == true) {
 									sound.playSound(R.raw.erro, "MenuSound",
 											false, context);
 								}
@@ -231,7 +239,7 @@ public class Fase02 extends View implements Runnable, Killable {
 			}
 
 			SceneManager.ChangeScene(context);
-			if (SceneManager.sound) {
+			if (SceneManager.sound == true) {
 				SoundManager.getInstance().playSound(R.raw.acerto, "sound",
 						false, context);
 			}
@@ -239,12 +247,12 @@ public class Fase02 extends View implements Runnable, Killable {
 			hitPoints = 0;
 		}
 
+		
+		asset.update(deltaTime);
 		this.deltaTime = System.currentTimeMillis() - this.lastTimeCount;
 		this.lastTimeCount = System.currentTimeMillis();
 
 	}
-
-	
 
 	public void run() {
 		while (ativo) {

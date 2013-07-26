@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.example.brinquedo1.Scene;
 
-
 import Gerenciadores.ImageManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -23,7 +22,7 @@ public class Fase7_Assets_ETAPA2 extends Scene {
 	int X;
 	int Y;
 	Rect[] rect = new Rect[4];
-
+	int points = 0;
 	int[] HeightBitmap = new int[4];
 	int[] WidthBitmap = new int[4];
 	Rect[] rectColor = new Rect[4];
@@ -61,7 +60,7 @@ public class Fase7_Assets_ETAPA2 extends Scene {
 		geometricFigures[6] = geometricFigures[sort];
 	}
 
-	public void setconfig(int larg, int Alt, Paint paint) {
+	public void setconf(int larg, int Alt) {
 		this.larg = larg;
 		this.alt = Alt;
 		this.paint = paint;
@@ -119,6 +118,75 @@ public class Fase7_Assets_ETAPA2 extends Scene {
 
 	}
 
+	public void setconfig(int larg, int Alt, Paint paint) {
+		this.larg = larg;
+		this.alt = Alt;
+		this.paint = paint;
+
+		for (int i = 0; i < rect.length; i++) {
+			WidthBitmap[i] = geometricFigures[i + 4].getWidth()
+					* ((int) (10 * this.alt / 40) - (this.alt / 40))
+					/ geometricFigures[i + 4].getHeight();
+		}
+		for (int i = 0; i < rectColor.length; i++) {
+			HeightBitmap[i] = geometricFigures[i].getHeight()
+					* ((int) (14 * this.larg / 40) - (int) (8.5 * this.larg / 40))
+					/ geometricFigures[i].getWidth();
+		}
+		if (!rect[1].isEmpty()) {
+
+			rect[1].set((int) (3.5 * this.larg / 40 - WidthBitmap[1] / 2),
+					this.alt / 40,
+					(int) (3.5 * this.larg / 40 + WidthBitmap[1] / 2),
+					(int) (10 * this.alt / 40));
+		}
+		if (!rect[0].isEmpty()) {
+
+			rect[0].set((int) (3.5 * this.larg / 40 - WidthBitmap[0] / 2),
+					(int) (10.5 * this.alt / 40),
+					(int) (3.5 * this.larg / 40 + WidthBitmap[0] / 2),
+					(int) (19.5 * this.alt / 40));
+		}
+		if (!rect[3].isEmpty()) {
+
+			rect[3].set((int) (3.5 * this.larg / 40 - WidthBitmap[3] / 2),
+					20 * this.alt / 40,
+					(int) (3.5 * this.larg / 40 + WidthBitmap[3] / 2),
+					(int) (29 * this.alt / 40));
+		}
+		if (!rect[2].isEmpty()) {
+
+			rect[2].set((int) (3.5 * this.larg / 40 - WidthBitmap[2] / 2),
+					(int) (30.5 * this.alt / 40),
+					(int) (3.5 * this.larg / 40 + WidthBitmap[2] / 2),
+					(int) (39.5 * this.alt / 40));
+		}
+
+		rectColor[0].set((int) (8.5 * this.larg / 40), 7 * this.alt / 8
+				- HeightBitmap[0], (int) (14 * this.larg / 40),
+				7 * this.alt / 8);
+
+		rectColor[1].set((int) (18 * this.larg / 40), 7 * this.alt / 8
+				- HeightBitmap[1], (int) (22 * this.larg / 40),
+				7 * this.alt / 8);
+
+		HeightBitmap[2] = geometricFigures[2].getHeight()
+				* ((int) (28.5 * this.larg / 40) - (int) (25 * this.larg / 40))
+				/ geometricFigures[2].getWidth();
+
+		rectColor[2].set((int) (25f * this.larg / 40), 7 * this.alt / 8
+				- HeightBitmap[2], (int) (28.5 * this.larg / 40),
+				7 * this.alt / 8);
+		HeightBitmap[3] = geometricFigures[3].getHeight()
+				* ((int) (37 * this.larg / 40) - (int) (33.5 * this.larg / 40))
+				/ geometricFigures[3].getWidth();
+
+		rectColor[3].set((int) (33.5 * this.larg / 40), 7 * this.alt / 8
+				- HeightBitmap[3], (int) (37 * this.larg / 40),
+				7 * this.alt / 8);
+
+	}
+
 	public void setXY(int x, int y) {
 		this.X = x;
 		this.Y = y;
@@ -131,51 +199,62 @@ public class Fase7_Assets_ETAPA2 extends Scene {
 	public Rect[] getRectColor() {
 		return rectColor;
 	}
+	public int getPoint() {
+		return points;
+	}
 
 	public void colidiu(Rect rect, Rect rectcolor, int i) {
 
-		rect.set(rectcolor);
+		for (int p = 0; p < this.rect.length; p++) {
+			if (this.rect[p] == rect) {
+				this.rect[p].setEmpty();
+			}
+		}
+
+		points++;
 
 		geometricFigures[i] = geometricFigures[i + 4];
 	}
 
 	public void setRectInicial(Rect rec) {
 		for (int i = 0; i < rect.length; i++) {
-			if (rec == rect[i]) {
-				if (i == 0) {
+			if (!rect[i].isEmpty()) {
 
-					rect[0].set(
-							(int) (3.5 * this.larg / 40 - WidthBitmap[0] / 2),
-							(int) (10.5 * this.alt / 40),
-							(int) (3.5 * this.larg / 40 + WidthBitmap[0] / 2),
-							(int) (19.5 * this.alt / 40));
-				}
-				if (i == 1) {
+				if (rec == rect[i]) {
+					if (i == 0) {
 
-					rect[1].set(
-							(int) (3.5 * this.larg / 40 - WidthBitmap[1] / 2),
-							this.alt / 40,
-							(int) (3.5 * this.larg / 40 + WidthBitmap[1] / 2),
-							(int) (10 * this.alt / 40));
-				}
-				if (i == 2) {
-					rect[2].set(
-							(int) (3.5 * this.larg / 40 - WidthBitmap[2] / 2),
-							(int) (30.5 * this.alt / 40),
-							(int) (3.5 * this.larg / 40 + WidthBitmap[2] / 2),
-							(int) (39.5 * this.alt / 40));
-				}
-				if (i == 3) {
-					rect[3].set(
-							(int) (3.5 * this.larg / 40 - WidthBitmap[3] / 2),
-							20 * this.alt / 40,
-							(int) (3.5 * this.larg / 40 + WidthBitmap[3] / 2),
-							(int) (29 * this.alt / 40));
-				}
+						rect[0].set(
+								(int) (3.5 * this.larg / 40 - WidthBitmap[0] / 2),
+								(int) (10.5 * this.alt / 40),
+								(int) (3.5 * this.larg / 40 + WidthBitmap[0] / 2),
+								(int) (19.5 * this.alt / 40));
+					}
+					if (i == 1) {
 
+						rect[1].set(
+								(int) (3.5 * this.larg / 40 - WidthBitmap[1] / 2),
+								this.alt / 40,
+								(int) (3.5 * this.larg / 40 + WidthBitmap[1] / 2),
+								(int) (10 * this.alt / 40));
+					}
+					if (i == 2) {
+						rect[2].set(
+								(int) (3.5 * this.larg / 40 - WidthBitmap[2] / 2),
+								(int) (30.5 * this.alt / 40),
+								(int) (3.5 * this.larg / 40 + WidthBitmap[2] / 2),
+								(int) (39.5 * this.alt / 40));
+					}
+					if (i == 3) {
+						rect[3].set(
+								(int) (3.5 * this.larg / 40 - WidthBitmap[3] / 2),
+								20 * this.alt / 40,
+								(int) (3.5 * this.larg / 40 + WidthBitmap[3] / 2),
+								(int) (29 * this.alt / 40));
+					}
+
+				}
 			}
 		}
-
 	}
 
 	public void setRect(Rect i) {
@@ -191,12 +270,11 @@ public class Fase7_Assets_ETAPA2 extends Scene {
 
 			canvas.drawBitmap(geometricFigures[i], null, rectColor[i], paint);
 		}
-
-		for (int i = 0; i < rect.length; i++) 
+		
+		for (int i = 0; i < rect.length; i++)
 		{
 			canvas.drawBitmap(geometricFigures[i + 4], null, rect[i], paint);
 		}
-		
 
 	}
 }

@@ -3,6 +3,7 @@ package com.example.brinquedo1;
 import com.example.brinquedo1.MainActivity;
 
 import Gerenciadores.ImageManager;
+import Gerenciadores.SceneManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,9 +30,11 @@ public class Vitoria extends Scene
 	private View menu;
 	Activity activity;
 	int counter = 0;
-	int period = 0;
+	int period = 1;
 	String TAG = "Creditos";
 	int pos = 0;
+	private long cronometro;
+
 	
 	public Vitoria(Context context) 
 	{	
@@ -39,6 +42,7 @@ public class Vitoria extends Scene
 		picture = new ImageManager(context);
 		paint = new Paint();
 
+		period=1;
 
 		paint.setColor(Color.BLACK);
 		activity = (Activity) context;
@@ -61,6 +65,27 @@ public class Vitoria extends Scene
 
 		
 			canvas.drawBitmap(background, null, rectCreditos1, paint);
+		
+	}
+	public void update(long deltaTime){
+
+		if (period != 0) {
+			counter++;
+		}
+
+		if (counter == 1000) {
+			period++;
+			counter = 0;
+		}
+		if(period>=5){
+			 activity.finish();
+	          
+
+			 
+	          SceneManager.activity.finish();
+	          period=0;
+	          
+		}
 		
 	}
 }

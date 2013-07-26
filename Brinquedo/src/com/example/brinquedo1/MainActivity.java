@@ -18,7 +18,6 @@ import android.view.WindowManager;
 
 public class MainActivity extends Activity {
 	public static final String TAG = "quadros";
-	Menu menu;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,25 +32,18 @@ public class MainActivity extends Activity {
 		Thread processo = new Thread();
 
 		SceneManager.processo = processo;
-		if (menu == null) {
-			menu = new Menu(this);
-		}
-		else{
-			menu.start();
-		}
+
+		Menu menu = new Menu(this, SceneManager.processo);
 		setContentView(menu);
 	}
 
 	protected void onPause() {
 		SoundManager.getInstance().StopAllSongs();
-		menu.killMeSoftly();
-		//s killMeSoftly();
+		// killMeSoftly();
 		super.onPause();
 	}
 
 	protected void onResume() {
-
-		menu.ativo=true;
 		SoundManager.getInstance().StopAllSongs();
 		if (SceneManager.sound) {
 			SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
@@ -62,7 +54,7 @@ public class MainActivity extends Activity {
 
 	protected void OnDestroy() {
 		SoundManager.getInstance().StopAllSongs();
-		 killMeSoftly();
+		// killMeSoftly();
 		super.onDestroy();
 	}
 
@@ -70,7 +62,7 @@ public class MainActivity extends Activity {
 
 		ElMatador.getInstance().killThenAll();
 
-		System.exit(0);
+		finish();
 
 	}
 
