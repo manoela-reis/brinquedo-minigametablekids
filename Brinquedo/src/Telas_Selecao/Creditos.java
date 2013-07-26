@@ -77,8 +77,8 @@ public class Creditos extends View implements Runnable, Killable {
 
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		rectCreditos1.set(getWidth() / 15, 0, getWidth(),
-				(int) (getHeight() / 1.1f));
+		rectCreditos1.set(getWidth() / 22, 0, getWidth(),
+				(int) (getHeight() / 1.08f));
 
 	}
 

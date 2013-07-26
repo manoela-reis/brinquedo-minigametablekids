@@ -206,7 +206,7 @@ public class Menu extends View implements Runnable, Killable {
 				play = true;
 
 			}
-			if (Creditos.contains(a, b)) {
+			if (Creditos.contains(a, b) && setup == false) {
 				Log.i(MainActivity.TAG, "Entrou no créditos !! ");
 
 				// SoundManager.getInstance().StopSong("MusicMenu");
@@ -219,7 +219,7 @@ public class Menu extends View implements Runnable, Killable {
 			}
 
 
-			if (som.contains(a, b)) {
+			if (som.contains(a, b) && setup == false) {
 				if (SceneManager.sound == true) {
 					sound.StopAllSongs();
 					SceneManager.sound = false;
