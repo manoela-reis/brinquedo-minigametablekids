@@ -275,4 +275,12 @@ public class Fase02 extends View implements Runnable, Killable {
 		ativo = false;
 
 	}
+	public void ativar() {
+		processo = new Thread(this);
+		processo.start();
+
+		ativo = true;
+
+	}
+
 }

@@ -52,7 +52,7 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 		picture = new ImageManager(context);
 		paint = new Paint();
 
-		
+		ativo=true;
 		activity = (Activity) context;
 		ElMatador.getInstance().add(this);
 
@@ -218,6 +218,13 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 	public void killMeSoftly() {
 
 		ativo = false;
+	}
+	public void ativar() {
+		processo = new Thread(this);
+		processo.start();
+
+		ativo = true;
+
 	}
 
 }

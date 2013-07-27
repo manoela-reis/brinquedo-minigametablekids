@@ -21,7 +21,7 @@ import android.view.WindowManager;
 
 public class CreditosActivity extends Activity implements Killable {
 	public static final String TAG = "quadros";
-
+	Creditos creditos;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -32,7 +32,7 @@ public class CreditosActivity extends Activity implements Killable {
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		
-		View creditos = new Creditos(this,SceneManager.processo);
+        creditos = new Creditos(this,SceneManager.processo);
 
 	 	setContentView(creditos);
 		
@@ -41,6 +41,8 @@ public class CreditosActivity extends Activity implements Killable {
 	protected void onPause() {
 		//SoundManager.getInstance().StopAllSongs();
 		// killMeSoftly();
+		creditos.killMeSoftly();
+
 		super.onPause();
 	}
 	
@@ -49,6 +51,10 @@ public class CreditosActivity extends Activity implements Killable {
 
 		//SoundManager.getInstance().playSound(R.raw.musicmenu, "MusicMenu",
 		//		true, this);
+		if(creditos!=null){
+			creditos.ativar();
+			Log.i("ooi", "tchaaaaau");
+		}
 		super.onResume();
 	}
 	

@@ -2,6 +2,8 @@ package Gerenciadores;
 
 import java.util.HashMap;
 
+import com.example.brinquedo1.R;
+
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
@@ -20,6 +22,7 @@ public class SoundManager {
 
 	public static SoundManager getInstance() {
 		if (instance == null) {
+
 			instance = new SoundManager();
 
 		}
@@ -30,25 +33,27 @@ public class SoundManager {
 	public void playSound(final int source, String name, boolean isLooping,
 			Context context) {
 
-		final MediaPlayer mp = MediaPlayer.create(context, source);
+		if (!songs.containsValue(name)) {
+			final MediaPlayer mp = MediaPlayer.create(context,
+					source);
+			
+			songs.put(name, mp);
 
+		}
 
-			try {
-				
-				mp.setLooping(isLooping);
-				mp.start();
-				songs.put(name, mp);
-			} catch (Exception e) {
-				mp.stop();
-				Log.i(TAG, "Erro no som");
-			}
-		
+		try {
+			songs.get(name).setLooping(isLooping);
+			songs.get(name).start();
+		} catch (Exception e) {
+			songs.get(name).stop();
+			Log.i(TAG, "Erro no som");
+		}
+
 	}
 
 	public void StopSong(String name) {
 		try {
 			this.songs.get(name).stop();
-			this.songs.remove(name);
 			Log.i("SOUNDMANAGER", "STOP");
 		} catch (Exception e) {
 
@@ -58,10 +63,10 @@ public class SoundManager {
 	public void StopAllSongs() {
 		for (MediaPlayer currentAudio : songs.values()) {
 			currentAudio.stop();
-			songs.remove(currentAudio);
 		}
 
 	}
+
 	public void PauseAllSongs() {
 		for (MediaPlayer currentAudio : songs.values()) {
 			currentAudio.stop();
