@@ -188,7 +188,7 @@ public class EscolherEtapa extends View implements Runnable, Killable {
 				if (Etapa2[5 + i].contains(a, b)) {
 					Log.i(MainActivity.TAG, "Escolheu a Etapa1!! ");
 					SceneManager.Setup((Activity) super.getContext(), 2, 5 + i,processo);
-					processo.stop();
+					
 
 				}
 			}
