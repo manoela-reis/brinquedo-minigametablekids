@@ -191,14 +191,14 @@ public class Fase02 extends View implements Runnable, Killable {
 								movendo = false;
 								mov = null;
 								if (SceneManager.sound == true) {
-									sound.playSound(R.raw.acerto, "MenuSound",
+									sound.playSound(R.raw.acerto, "acerto",
 											false, context);
 								}
 
 								hitPoints++;
 							} else {
 								if (SceneManager.sound == true) {
-									sound.playSound(R.raw.erro, "MenuSound",
+									sound.playSound(R.raw.erro, "erro",
 											false, context);
 								}
 							}
@@ -230,6 +230,11 @@ public class Fase02 extends View implements Runnable, Killable {
 		if (hitPoints == totalPoints) {
 			// classe de vitoria
 			// canvas.drawBitmap(Backgrounds[0], null, Back, paint);
+			hitPoints = 0;
+			if (SceneManager.sound == true) {
+				SoundManager.getInstance().playSound(R.raw.acerto, "sound",
+						false, context);
+			}
 			try {
 				Thread.sleep(1000);
 			}
@@ -237,14 +242,11 @@ public class Fase02 extends View implements Runnable, Killable {
 			catch (Exception e) {
 				Log.e("Deu erro", "Quem sabe mete o pe");
 			}
-
+			
 			SceneManager.ChangeScene(context);
-			if (SceneManager.sound == true) {
-				SoundManager.getInstance().playSound(R.raw.acerto, "sound",
-						false, context);
-			}
+			
 
-			hitPoints = 0;
+			
 		}
 
 		
