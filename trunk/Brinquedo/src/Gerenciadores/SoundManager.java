@@ -36,26 +36,21 @@ public class SoundManager {
 
 	public void playSound(final int source, String name, boolean isLooping,
 			Context context) {
-	
 
-		final MediaPlayer mp = MediaPlayer.create(context,
-				source);
-		if (!songs.containsValue(name)) {
+			if (!songs.containsValue(name)) {
+
+				final MediaPlayer mp = MediaPlayer.create(context, source);
+				mp.setLooping(isLooping);
+
+				songs.put(name, mp);
+
+			}
 		
-			mp.setLooping(isLooping);
-			
-			songs.put(name, mp);
-			
-
-		}
-
 		try {
+				songs.get(name).start();
+
 			
 
-			songs.get(name).start();
-		
-		
-			
 		} catch (Exception e) {
 			songs.get(name).stop();
 			Log.i(TAG, "Erro no som");
@@ -66,7 +61,7 @@ public class SoundManager {
 	public void StopSong(String name) {
 		try {
 			this.songs.get(name).stop();
-
+			this.songs.remove(name);
 			Log.i("SOUNDMANAGER", "STOP");
 		} catch (Exception e) {
 
@@ -76,6 +71,7 @@ public class SoundManager {
 	public void StopAllSongs() {
 		for (MediaPlayer currentAudio : songs.values()) {
 			currentAudio.stop();
+			songs.remove(currentAudio);
 
 		}
 
