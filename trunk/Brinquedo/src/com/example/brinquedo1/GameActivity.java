@@ -42,7 +42,7 @@ public class GameActivity extends Activity implements Killable {
 
 	protected void onPause() {
 		SoundManager.getInstance().StopAllSongs();
-
+		SceneManager.scene.killMeSoftly();
 		// killMeSoftly();
 		super.onPause();
 	}
@@ -60,6 +60,10 @@ public class GameActivity extends Activity implements Killable {
 							"VitoriaSound", false, this);
 				}
 			}
+		}
+		if(SceneManager.scene!=null){
+			SceneManager.scene.ativar();
+			Log.i("ooi", "tchaaaaau");
 		}
 
 		super.onResume();

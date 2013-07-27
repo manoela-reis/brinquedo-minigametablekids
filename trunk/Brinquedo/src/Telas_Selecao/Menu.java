@@ -69,6 +69,7 @@ public class Menu extends View implements Runnable, Killable {
 		activity = (Activity) context;
 		options = new Bitmap[3];
 		areaOptions = new Rect[3];
+		ativo=true;
 
 		background = picture.ImageManager("cenario.png");
 		options[0] = picture.ImageManager("Play.png");
@@ -315,6 +316,13 @@ public class Menu extends View implements Runnable, Killable {
 	public void killMeSoftly() {
 
 		ativo = false;
+
+	}
+	public void ativar() {
+		processo = new Thread(this);
+		processo.start();
+
+		ativo = true;
 
 	}
 

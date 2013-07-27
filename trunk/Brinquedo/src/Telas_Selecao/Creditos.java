@@ -51,6 +51,7 @@ public class Creditos extends View implements Runnable, Killable {
 		picture = new ImageManager(context);
 		paint = new Paint();
 
+		ativo=true;
 		activity = (Activity) context;
 
 		Log.i(TAG, "Entrou no construtor");
@@ -155,6 +156,13 @@ public class Creditos extends View implements Runnable, Killable {
 			postInvalidate();
 		}
 		// TODO Auto-generated method stub
+	}
+	public void ativar() {
+		processo = new Thread(this);
+		processo.start();
+
+		ativo = true;
+
 	}
 
 	public void killMeSoftly() {
