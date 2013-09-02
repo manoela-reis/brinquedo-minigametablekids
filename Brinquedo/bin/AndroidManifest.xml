@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.brinquedo1"
+    package="com.nave.shapesafari"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.brinquedo1.MainActivity"
+            android:name="com.nave.shapesafari.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -22,6 +22,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>   
+         <activity
+            android:name="com.nave.shapesafari.EtapasActivity"
+            android:screenOrientation="landscape" >
         </activity>
+         <activity
+            android:name="com.nave.shapesafari.GameActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+         <activity
+            android:name="com.nave.shapesafari.CreditosActivity"
+            android:screenOrientation="landscape" >
+        </activity> 
+        
     </application>
 </manifest>
