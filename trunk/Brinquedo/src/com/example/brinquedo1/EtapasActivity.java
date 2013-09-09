@@ -6,8 +6,8 @@ import Gerenciadores.ElMatador;
 import Gerenciadores.SceneManager;
 import Gerenciadores.SoundManager;
 import Gerenciadores.Killable;
-import Telas_Selecao.EscolherEtapa;
-import Telas_Selecao.Menu;
+import com.Telas_Selecao.EscolherEtapa;
+import com.Telas_Selecao.Menu;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import com.nave.shapesafari.R;
 
 public class EtapasActivity extends Activity implements Killable {
 	public static final String TAG = "quadros";
