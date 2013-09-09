@@ -8,8 +8,8 @@ import Gerenciadores.Killable;
 import Gerenciadores.SceneManager;
 import Gerenciadores.SoundManager;
 import Gerenciadores.SceneManager.SCENE;
-import Telas_Selecao.EscolherEtapa;
-import Telas_Selecao.Menu;
+import com.Telas_Selecao.EscolherEtapa;
+import com.Telas_Selecao.Menu;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,6 +20,7 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import com.nave.shapesafari.R;
 
 public class Fase02 extends View implements Runnable, Killable {
 

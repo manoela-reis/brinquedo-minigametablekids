@@ -3,7 +3,7 @@ package Gerenciadores;
 import com.example.brinquedo1.EtapasActivity;
 import com.example.brinquedo1.Fase02;
 import com.example.brinquedo1.GameActivity;
-import com.example.brinquedo1.R;
+import com.nave.shapesafari.R;
 import com.example.brinquedo1.Scene;
 import com.example.brinquedo1.Vitoria;
 

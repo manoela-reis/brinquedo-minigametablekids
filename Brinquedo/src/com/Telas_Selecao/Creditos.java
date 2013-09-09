@@ -54,9 +54,7 @@ public class Creditos extends View implements Runnable, Killable {
 		ativo=true;
 		activity = (Activity) context;
 
-		Log.i(TAG, "Entrou no construtor");
-		creditos1[0] = picture.ImageManager("creditos1.png");
-		creditos1[1] = picture.ImageManager("creditos2.png");
+		creditos1[0] = picture.ImageManager("creditos2.png");
 
 		// Thread
 		this.processo = processo;
@@ -78,8 +76,8 @@ public class Creditos extends View implements Runnable, Killable {
 
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		rectCreditos1.set(getWidth() / 22, 0, getWidth(),
-				(int) (getHeight() / 1.08f));
+		rectCreditos1.set(getWidth() / getWidth() - getWidth()/5, getHeight()/getHeight() - (int)(getHeight()/1.8f), getWidth() + getWidth()/3,
+				(int) (getHeight() + getHeight()/4));
 
 	}
 
@@ -103,20 +101,14 @@ public class Creditos extends View implements Runnable, Killable {
 			int a = (int) event.getX();
 			int b = (int) event.getY();
 
-			if (rectCreditos1.contains(a, b)) {
-				if (pos == 0) {
-					pos++;
-				} else {
-					if (pos == 1) {
-						activity.finish();
+			if (rectCreditos1.contains(a, b))
+			{
+				activity.finish();
 
-					}
-
-				}
 			}
 
 		}
-
+		
 		return super.onTouchEvent(event);
 	}
 
@@ -133,11 +125,6 @@ public class Creditos extends View implements Runnable, Killable {
 			counter = 0;
 		}
 		if (period >= 5) {
-
-			pos = 1;
-		}
-		if (period == 9) {
-
 			activity.finish();
 		}
 	}

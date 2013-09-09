@@ -3,7 +3,7 @@ package Gerenciadores;
 import java.io.IOException;
 import java.util.HashMap;
 
-import com.example.brinquedo1.R;
+import com.nave.shapesafari.R;
 
 import android.content.Context;
 import android.media.MediaPlayer;
